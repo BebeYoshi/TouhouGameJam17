@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: GachaPull1
   m_EditorClassIdentifier: Assembly-CSharp::GachaPull
   _personagens:
-  - nome: Low CHance
+  - nome: Low CHance 3*
     chance: 3
     sprite: {fileID: 0}
-  - nome: High Chance
+  - nome: High Chance 2*
     chance: 9
     sprite: {fileID: 0}
-  - nome: Highest Chance
+  - nome: Highest Chance 1*
     chance: 20
     sprite: {fileID: 0}

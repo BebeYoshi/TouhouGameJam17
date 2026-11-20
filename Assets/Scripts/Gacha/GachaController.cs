@@ -9,15 +9,17 @@ public class GachaController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
         [SerializeField] public GachaPull banner1;
-        [SerializeField] public TextMeshProUGUI nome;
+        [SerializeField] private TextMeshProUGUI[] nomes;
+        public bool coroutineOff;
+
         [SerializeField] public string[] lines;
         public float textSpeed;
         public int i;
+        public int j;
         public string testeNomePersonagem;
 
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -30,22 +32,27 @@ public class GachaController : MonoBehaviour
     public void retornaUmResultado(){
         GachaPull.Personagens personagem = banner1.SortearPersonagem();
         testeNomePersonagem = personagem.nome;
-        StartDialogue();
+       StartCoroutine (ShowResults(1));
     }
 
-     void StartDialogue(){
-        i = 0;
-        nome.text = "";
-        StartCoroutine(ShowLine());
-    }
+    public void retornaCincoResultados(){
+       StartCoroutine (ShowResults(5));
+        }
 
-    IEnumerator ShowLine(){
-        foreach (char c in lines[i].ToCharArray()){
-            nome.text += c;
+    IEnumerator ShowResults(int quantidade)
+{
+    for (int j = 0; j < quantidade; j++)
+    {
+        GachaPull.Personagens personagem = banner1.SortearPersonagem();
+
+        nomes[j].text = "";
+
+        foreach (char c in ". . . . .")
+        {
+            nomes[j].text += c;
             yield return new WaitForSeconds(textSpeed);
         }
-        nome.text = "";
-        nome.text = testeNomePersonagem;
+        nomes[j].text = personagem.nome;
     }
-
+}
 }
