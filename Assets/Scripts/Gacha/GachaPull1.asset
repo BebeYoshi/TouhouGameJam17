@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5312975fe1c0e3a4e874813aef6d7aac, type: 3}
+  m_Name: GachaPull1
+  m_EditorClassIdentifier: Assembly-CSharp::GachaPull
+  _personagens:
+  - nome: Low CHance
+    chance: 3
+    sprite: {fileID: 0}
+  - nome: High Chance
+    chance: 9
+    sprite: {fileID: 0}
+  - nome: Highest Chance
+    chance: 20
+    sprite: {fileID: 0}
