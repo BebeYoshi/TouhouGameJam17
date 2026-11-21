@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class CombatStats : MonoBehaviour
 {
@@ -17,7 +18,11 @@ public class CombatStats : MonoBehaviour
     public float BoozeGainMultiplier => Mathf.Max(0f, 1f + boozeGainBonus);
 
     public bool IsAlive => currentHealth > 0f;
-    public bool IsUltReady => data != null && currentBooze >= data.MaxBooze;
+    public bool IsUltReady => data != null && data.HasUlt && currentBooze >= data.MaxBooze;
+
+    public event Action<float, float> BoozeChanged;
+    public event Action UltReady;
+
     private void Awake()
     {
         if (database == null)
@@ -114,7 +119,20 @@ public class CombatStats : MonoBehaviour
             amount *= BoozeGainMultiplier;
         }
 
+        float previousBooze = currentBooze;
+        bool wasUltReady = IsUltReady;
+
         currentBooze = Mathf.Clamp(currentBooze + amount, 0f, data.MaxBooze);
+
+        if (currentBooze != previousBooze)
+        {
+            BoozeChanged?.Invoke(currentBooze, data.MaxBooze);
+        }
+
+        if (!wasUltReady && IsUltReady)
+        {
+            UltReady?.Invoke();
+        }
     }
 
     public void AddBoozeGainBonus(float bonus)
@@ -135,6 +153,7 @@ public class CombatStats : MonoBehaviour
         }
 
         currentBooze = 0f;
+        BoozeChanged?.Invoke(currentBooze, data.MaxBooze);
         return true;
     }
     

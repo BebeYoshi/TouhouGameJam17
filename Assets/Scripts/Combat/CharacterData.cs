@@ -27,6 +27,7 @@ public class CharacterData
     [SerializeField, Min(0f)] private float basicMultiplier = 1f;
     [SerializeField, Min(0f)] private float skillMultiplier = 1.5f;
     [SerializeField, Min(0f)] private float ultMultiplier = 3f;
+    [SerializeField] private bool hasUlt = true;
 
     public string Id => id;
     public string DisplayName => displayName;
@@ -47,5 +48,6 @@ public class CharacterData
     public float BasicMultiplier => basicMultiplier;
     public float SkillMultiplier => skillMultiplier;
     public float UltMultiplier => ultMultiplier;
+    public bool HasUlt => hasUlt;
 
 }
