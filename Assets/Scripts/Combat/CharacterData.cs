@@ -18,6 +18,10 @@ public class CharacterData
 
     [Header("Booze")]
     [SerializeField, Min(1f)] private float maxBooze = 100f;
+    [SerializeField, Min(0f)] private float boozePerSecond = 1f;
+    [SerializeField, Min(0f)] private float boozeOnHit = 5f;
+    [SerializeField, Min(0f)] private float boozeOnHurt = 5f;
+    [SerializeField, Min(0f)] private float boozeOnKill = 10f;
 
     [Header("Scaling")]
     [SerializeField, Min(0f)] private float basicMultiplier = 1f;
@@ -35,6 +39,10 @@ public class CharacterData
     public float Defense => defense;
 
     public float MaxBooze => maxBooze;
+    public float BoozePerSecond => boozePerSecond;
+    public float BoozeOnHit => boozeOnHit;
+    public float BoozeOnHurt => boozeOnHurt;
+    public float BoozeOnKill => boozeOnKill;
 
     public float BasicMultiplier => basicMultiplier;
     public float SkillMultiplier => skillMultiplier;
