@@ -1,5 +1,7 @@
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+
 
 public class CombatStats : MonoBehaviour
 {
@@ -8,11 +10,13 @@ public class CombatStats : MonoBehaviour
     [SerializeField] private string characterId;
 
     private CharacterData data;
+    private readonly List<StatusEffect> effects = new List<StatusEffect>();
     private float currentHealth;
     private float currentBooze;
     private float boozeGainBonus;
     private float attackTimer;
     private float skillTimer;
+    
 
     public CharacterData Data => data;
     public float CurrentHealth => currentHealth;
@@ -21,9 +25,12 @@ public class CombatStats : MonoBehaviour
 
     public bool IsAlive => currentHealth > 0f;
     public bool IsUltReady => data != null && data.HasUlt && currentBooze >= data.MaxBooze;
-    public bool IsAttackReady => IsAlive && attackTimer <= 0f;
-    public bool IsSkillReady => IsAlive && skillTimer <= 0f;
+    public bool IsStunned => HasEffect(StatusEffectType.Stun);
+    public bool CanAct => IsAlive && !IsStunned;
+    public bool IsAttackReady => CanAct && attackTimer <= 0f;
+    public bool IsSkillReady => CanAct && skillTimer <= 0f;
     public float SkillCooldownRemaining => skillTimer;
+     
 
     public event Action<float, float> BoozeChanged;
     public event Action UltReady;
@@ -62,6 +69,7 @@ public class CombatStats : MonoBehaviour
         AddBooze(data.BoozePerSecond * deltaTime);
         attackTimer = Mathf.Max(0f, attackTimer - deltaTime);
         skillTimer = Mathf.Max(0f, skillTimer - deltaTime);
+        TickEffects(deltaTime);
     }
 
     public void TakeDamage(float amount)
@@ -69,6 +77,21 @@ public class CombatStats : MonoBehaviour
         if (amount <= 0f || !IsAlive) 
         {
             return;
+        }
+
+        if (ApplyDamage(amount))
+        {
+            return;
+        }
+
+        AddBooze(data.BoozeOnHurt);
+    }
+
+    private bool ApplyDamage(float amount)
+    {
+        if (amount <= 0f || !IsAlive)
+        {
+            return false;
         }
 
         float previousHealth = currentHealth;
@@ -83,11 +106,12 @@ public class CombatStats : MonoBehaviour
 
         if (!IsAlive)
         {
+            effects.Clear();
             Died?.Invoke(this);
-            return;
+            return true;
         }
 
-        AddBooze(data.BoozeOnHurt);
+        return false;
     }
 
     public bool BasicAttack(CombatStats target)
@@ -136,9 +160,93 @@ public class CombatStats : MonoBehaviour
         }
     }
 
+    public void Heal(float amount)
+    {
+        if (amount <= 0f || !IsAlive)
+        {
+            return;
+        }
+
+        float previousHealth = currentHealth;
+
+        int roundedHeal = Mathf.RoundToInt(amount);
+        currentHealth = Mathf.Min(data.MaxHealth, currentHealth + roundedHeal);
+
+        if (currentHealth != previousHealth)
+        {
+            HealthChanged?.Invoke(currentHealth, data.MaxHealth); 
+        }
+    }
+
+    public void ApplyEffect(StatusEffect effect)
+    {
+        if (effect == null || !IsAlive)
+        {
+            return;
+        }
+
+        effects.Add(effect);
+    }
+
+    public bool HasEffect(StatusEffectType type)
+    {
+        foreach (StatusEffect effect in effects)
+        {
+            if (effect.Type == type)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void TickEffects(float deltaTime)
+    {
+        for (int i = effects.Count - 1; i >= 0; i--)
+        {
+            StatusEffect effect = effects[i];
+            int ticks = effect.Advance(deltaTime);
+
+            for (int t = 0; t < ticks; t++)
+            {
+                ApplyTick(effect);
+
+                if (!IsAlive)
+                {
+                    return;
+                }
+            }
+
+            if (effect.IsExpired)
+            {
+                effects.RemoveAt(i);
+            }
+        }
+    }
+
+    private void ApplyTick(StatusEffect effect)
+    {
+        switch (effect.Type)
+        {
+            case StatusEffectType.DamageOverTime:
+                float damage = DamageCalculator.CalculateDamage(effect.SourceAttack, data.Defense, effect.Multiplier);
+
+                if (ApplyDamage(damage) && effect.Source != null)
+                {
+                    effect.Source.AddBooze(effect.Source.Data.BoozeOnKill);
+                }
+                break;
+
+            case StatusEffectType.HealOverTime:
+                Heal(effect.SourceAttack * effect.Multiplier);
+                break;
+        }
+    }
+
     public bool UseUlt(CombatStats target)
     {
-        if (!CanHit(target))
+        if (!CanAct || !CanHit(target))
         {
             return false;
         }
@@ -166,6 +274,11 @@ public class CombatStats : MonoBehaviour
     public void AddBooze(float amount)
     {
         if (!IsAlive) 
+        {
+            return;
+        }
+
+        if (amount > 0f && HasEffect(StatusEffectType.BoozeBlock))
         {
             return;
         }
