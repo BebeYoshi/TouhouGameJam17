@@ -11,6 +11,12 @@ public class CharacterData
     [SerializeField] private CharacterRole role = CharacterRole.DPS;
     [SerializeField] private AttackType attackType = AttackType.Melee;
 
+    [Header("Combat Timing")]
+    [SerializeField, Min(0.1f)] private float attackSpeed = 1f;
+    [SerializeField, Min(0.1f)] private float attackRange = 1.5f;
+    [SerializeField, Min(0f)] private float moveSpeed = 2f;
+    [SerializeField, Min(0f)] private float skillCooldown = 8f;
+
     [Header("Basic Stats")]
     [SerializeField, Min(1f)] private float maxHealth = 600f;
     [SerializeField, Min(1f)] private float attack = 55f;
@@ -34,6 +40,11 @@ public class CharacterData
 
     public CharacterRole Role => role;
     public AttackType AttackType => attackType;
+
+    public float AttackSpeed => attackSpeed;
+    public float AttackRange => attackRange;
+    public float MoveSpeed => moveSpeed;
+    public float SkillCooldown => skillCooldown;
 
     public float MaxHealth => maxHealth;
     public float Attack => attack;

@@ -11,6 +11,8 @@ public class CombatStats : MonoBehaviour
     private float currentHealth;
     private float currentBooze;
     private float boozeGainBonus;
+    private float attackTimer;
+    private float skillTimer;
 
     public CharacterData Data => data;
     public float CurrentHealth => currentHealth;
@@ -19,9 +21,14 @@ public class CombatStats : MonoBehaviour
 
     public bool IsAlive => currentHealth > 0f;
     public bool IsUltReady => data != null && data.HasUlt && currentBooze >= data.MaxBooze;
+    public bool IsAttackReady => IsAlive && attackTimer <= 0f;
+    public bool IsSkillReady => IsAlive && skillTimer <= 0f;
+    public float SkillCooldownRemaining => skillTimer;
 
     public event Action<float, float> BoozeChanged;
     public event Action UltReady;
+    public event Action<float, float> HealthChanged;
+    public event Action<CombatStats> Died;
 
     private void Awake()
     {
@@ -44,11 +51,17 @@ public class CombatStats : MonoBehaviour
         currentHealth = data.MaxHealth;
         currentBooze = 0f;
         boozeGainBonus = 0f;
+        attackTimer = 0f;
+        skillTimer = 0f;
     } 
 
     private void Update()
     {
-        AddBooze(data.BoozePerSecond * Time.deltaTime);
+        float deltaTime = Time.deltaTime;
+
+        AddBooze(data.BoozePerSecond * deltaTime);
+        attackTimer = Mathf.Max(0f, attackTimer - deltaTime);
+        skillTimer = Mathf.Max(0f, skillTimer - deltaTime);
     }
 
     public void TakeDamage(float amount)
@@ -58,13 +71,56 @@ public class CombatStats : MonoBehaviour
             return;
         }
 
+        float previousHealth = currentHealth;
+
         int roundedDamage = Mathf.RoundToInt(amount);
         currentHealth = Mathf.Max(0f, currentHealth - roundedDamage);
+
+        if (currentHealth != previousHealth)
+        {
+            HealthChanged?.Invoke(currentHealth, data.MaxHealth);
+        }
+
+        if (!IsAlive)
+        {
+            Died?.Invoke(this);
+            return;
+        }
 
         AddBooze(data.BoozeOnHurt);
     }
 
-    public void Attack(CombatStats target, float multiplier)
+    public bool BasicAttack(CombatStats target)
+    {
+        if (!IsAttackReady || !CanHit(target))
+        {
+            return false;
+        }
+
+        Attack(target, data.BasicMultiplier);
+        attackTimer = 1f / data.AttackSpeed;
+        return true;
+    }
+
+    public bool UseSkill(CombatStats target)
+    {
+        if (!IsSkillReady || !CanHit(target))
+        {
+            return false;
+        }
+
+        Attack(target, data.SkillMultiplier);
+        skillTimer = data.SkillCooldown;
+        return true;
+    }
+
+    public bool IsInRange(CombatStats target)
+    {
+        return target != null 
+            && Vector2.Distance(transform.position, target.transform.position) <= data.AttackRange;
+    }
+
+    private void Attack(CombatStats target, float multiplier)
     {
         if (!CanHit(target))
         {
