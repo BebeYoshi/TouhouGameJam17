@@ -34,3 +34,10 @@ public enum DotKind
     Fire,
     Bleed
 }
+
+public enum Species
+{
+    Youkai,
+    Doll,
+    Human
+}

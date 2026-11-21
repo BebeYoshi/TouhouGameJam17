@@ -8,6 +8,8 @@ public class CombatStats : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private CharacterDatabase database;
     [SerializeField] private string characterId;
+    [SerializeField] private CombatSettings settings;
+    [SerializeField, Min(1)] private int level = 1;
 
     private CharacterData data;
     private readonly List<StatusEffect> effects = new List<StatusEffect>();
@@ -16,12 +18,18 @@ public class CombatStats : MonoBehaviour
     private float boozeGainBonus;
     private float attackTimer;
     private float skillTimer;
+    private float levelMultiplier = 1f;
     
 
     public CharacterData Data => data;
     public float CurrentHealth => currentHealth;
     public float CurrentBooze => currentBooze;
     public float BoozeGainMultiplier => Mathf.Max(0f, 1f + boozeGainBonus);
+    public int Level => level;
+    public bool IsInitialized => data != null;
+    public float MaxHealth => Mathf.Round(data.MaxHealth * levelMultiplier);
+    public float Attack => data.Attack * levelMultiplier;
+    public float Defense => data.Defense * levelMultiplier;
 
     public bool IsAlive => currentHealth > 0f;
     public bool IsUltReady => data != null && data.HasUlt && currentBooze >= data.MaxBooze;
@@ -39,28 +47,48 @@ public class CombatStats : MonoBehaviour
 
     private void Awake()
     {
-        if (database == null)
+        if (string.IsNullOrEmpty(characterId))
         {
-            Debug.LogError($"{name}: database not assigned", this);
             enabled = false;
             return;
         }
 
-        data = database.FindById(characterId);
+        Initialize(characterId, level);
+    } 
 
-        if (data == null)
+    public bool Initialize(string id, int startLevel)
+    {
+        if (database == null || settings == null)
         {
-            Debug.LogError($"{name}: character '{characterId}' not found.", this);
+            Debug.LogError($"{name}: databse or settings not assigned", this);
             enabled = false;
-            return;
+            return false;
         }
 
-        currentHealth = data.MaxHealth;
+        CharacterData found = database.FindById(id);
+
+        if (found == null)
+        {
+            Debug.LogError($"{name}: character '{id}' not found.", this);
+            enabled = false;
+            return false;
+        }
+
+        data = found;
+        characterId = id;
+        level = settings.ClampLevel(startLevel);
+        levelMultiplier = settings.GetStatsMultiplier(level);
+
+        currentHealth = MaxHealth;
         currentBooze = 0f;
         boozeGainBonus = 0f;
         attackTimer = 0f;
         skillTimer = 0f;
-    } 
+        effects.Clear();
+
+        enabled = true;
+        return true;
+    }
 
     private void Update()
     {
@@ -101,7 +129,7 @@ public class CombatStats : MonoBehaviour
 
         if (currentHealth != previousHealth)
         {
-            HealthChanged?.Invoke(currentHealth, data.MaxHealth);
+            HealthChanged?.Invoke(currentHealth, MaxHealth);
         }
 
         if (!IsAlive)
@@ -121,7 +149,7 @@ public class CombatStats : MonoBehaviour
             return false;
         }
 
-        Attack(target, data.BasicMultiplier);
+        PerformAttack(target, data.BasicMultiplier);
         attackTimer = 1f / data.AttackSpeed;
         return true;
     }
@@ -133,7 +161,7 @@ public class CombatStats : MonoBehaviour
             return false;
         }
 
-        Attack(target, data.SkillMultiplier);
+        PerformAttack(target, data.SkillMultiplier);
         skillTimer = data.SkillCooldown;
         return true;
     }
@@ -144,7 +172,7 @@ public class CombatStats : MonoBehaviour
             && Vector2.Distance(transform.position, target.transform.position) <= data.AttackRange;
     }
 
-    private void Attack(CombatStats target, float multiplier)
+    private void PerformAttack(CombatStats target, float multiplier)
     {
         if (!CanHit(target))
         {
@@ -170,11 +198,11 @@ public class CombatStats : MonoBehaviour
         float previousHealth = currentHealth;
 
         int roundedHeal = Mathf.RoundToInt(amount);
-        currentHealth = Mathf.Min(data.MaxHealth, currentHealth + roundedHeal);
+        currentHealth = Mathf.Min(MaxHealth, currentHealth + roundedHeal);
 
         if (currentHealth != previousHealth)
         {
-            HealthChanged?.Invoke(currentHealth, data.MaxHealth); 
+            HealthChanged?.Invoke(currentHealth, MaxHealth); 
         }
     }
 
@@ -230,7 +258,7 @@ public class CombatStats : MonoBehaviour
         switch (effect.Type)
         {
             case StatusEffectType.DamageOverTime:
-                float damage = DamageCalculator.CalculateDamage(effect.SourceAttack, data.Defense, effect.Multiplier);
+                float damage = DamageCalculator.CalculateDamage(effect.SourceAttack, Defense, effect.Multiplier);
 
                 if (ApplyDamage(damage) && effect.Source != null)
                 {
@@ -267,7 +295,7 @@ public class CombatStats : MonoBehaviour
 
     private void DealDamage(CombatStats target, float multiplier)
     {
-        float damage = DamageCalculator.CalculateDamage(data.Attack, target.Data.Defense, multiplier);
+        float damage = DamageCalculator.CalculateDamage(Attack, target.Defense, multiplier);
         target.TakeDamage(damage);
     }
 

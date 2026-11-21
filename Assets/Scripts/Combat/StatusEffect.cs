@@ -20,7 +20,7 @@ public class StatusEffect
         Type = type;
         Kind = kind;
         Source = source;
-        SourceAttack = source !=null ? source.Data.Attack : 0f;
+        SourceAttack = source !=null ? source.Attack : 0f;
         Multiplier = multiplier;
         Remaining = duration;
         tickTimer = TickInterval;

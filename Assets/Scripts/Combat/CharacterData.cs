@@ -6,6 +6,7 @@ public class CharacterData
     [Header("Identity")]
     [SerializeField] private string id = "";
     [SerializeField] private string displayName = "";
+    [SerializeField] private Species species = Species.Youkai;
 
     [Header("Combat Profile")]
     [SerializeField] private CharacterRole role = CharacterRole.DPS;
@@ -37,6 +38,7 @@ public class CharacterData
 
     public string Id => id;
     public string DisplayName => displayName;
+    public Species Species => species;
 
     public CharacterRole Role => role;
     public AttackType AttackType => attackType;
