@@ -23,8 +23,7 @@ public enum StatusEffectType
     ProjectileShield,
     DamageBuff,      
     BoozeGainBuff,
-    HealReduction,   
-    Charm,           
+    HealReduction,
     Revived
 }
 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class SkillHitbox : MonoBehaviour
 {
     [SerializeField, Min(0.05f)] private float lifetime = 0.5f;
@@ -14,6 +15,21 @@ public class SkillHitbox : MonoBehaviour
     private float damageMultiplier;
     private EffectSpec effect;
     private bool consumed;
+    private Rigidbody2D body;
+    private Collider2D hitboxCollider;
+    private CombatStats homingTarget;
+    private Vector2 direction;
+    private float launchTime;
+    private float expireTime;
+    private bool isHoming;
+
+    public bool IsProjectile => speed > 0f;
+
+    private void Awake()
+    {
+        body = GetComponent<Rigidbody2D>();
+        hitboxCollider = GetComponent<Collider2D>();
+    }
 
     public void Setup(CombatStats newOwner, HitboxTargets newTargets, float newDamageMultiplier, EffectSpec newEffect)
     {
@@ -21,20 +37,57 @@ public class SkillHitbox : MonoBehaviour
         targets = newTargets;
         damageMultiplier = newDamageMultiplier;
         effect = newEffect;
+        direction = transform.right;
+        expireTime = Time.time + lifetime;
 
-        Rigidbody2D body = GetComponent<Rigidbody2D>();
-
-        if (body != null && speed > 0f)
+        if (IsProjectile)
         {
-            body.linearVelocity = transform.right * speed;
+            body.linearVelocity = direction * speed;
+        }
+    }
+
+    public void HomeOn(CombatStats target, float delay)
+    {
+        homingTarget = target;
+        isHoming = true;
+        launchTime = Time.time + delay;
+        expireTime = launchTime + lifetime;
+        hitboxCollider.enabled = delay <= 0f;
+        body.linearVelocity = Vector2.zero;
+    }
+
+    private void FixedUpdate()
+    {
+        if (Time.time >= expireTime)
+        {
+            Destroy(gameObject);
+            return;
         }
 
-        Destroy(gameObject, lifetime);
+        if (!isHoming || consumed || Time.time < launchTime)
+        {
+            return;
+        }
+
+        hitboxCollider.enabled = true;
+
+        if (homingTarget != null && homingTarget.IsAlive)
+        {
+            Vector2 offset = homingTarget.transform.position - transform.position;
+
+            if (offset.sqrMagnitude > 0.0001f)
+            {
+                direction = offset.normalized;
+            }
+        }
+
+        body.rotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        body.linearVelocity = direction * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (owner == null || consumed)
+        if (owner == null || consumed || other.isTrigger)
         {
             return;
         }
@@ -69,10 +122,21 @@ public class SkillHitbox : MonoBehaviour
         }
     }
 
+    public bool TryBlock(BattleSide barrierSide)
+    {
+        if (!IsProjectile || consumed || owner == null || owner.Side == barrierSide)
+        {
+            return false;
+        }
+
+        Consume();
+        return true;
+    }
+
     private void Consume()
     {
         consumed = true;
-        GetComponent<Collider2D>().enabled = false;
+        hitboxCollider.enabled = false;
         Destroy(gameObject);
     }
 }

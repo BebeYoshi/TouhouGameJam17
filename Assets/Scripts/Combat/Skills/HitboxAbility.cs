@@ -10,6 +10,12 @@ public class HitboxAbility : CombatAbility
     [SerializeField, Min(0f)] private float customMultiplier = 0f;
     [SerializeField] private EffectSpec effect = new EffectSpec();
 
+    [Header("Projectiles")]
+    [SerializeField, Min(1)] private int projectileCount = 1;
+    [SerializeField, Min(0f)] private float spawnRadius = 0f;
+    [SerializeField, Min(0f)] private float launchInterval = 0f;
+    [SerializeField] private bool homing = false;
+
     public override bool Execute(CombatStats owner, CombatStats target)
     {
         if (hitboxPrefab == null)
@@ -36,8 +42,19 @@ public class HitboxAbility : CombatAbility
             rotation = Quaternion.Euler(0f, 0f, angle);
         }
 
-        SkillHitbox hitbox = Instantiate(hitboxPrefab, position, rotation);
-        hitbox.Setup(owner, targets, GetDamageMultiplier(owner), effect);
+        float multiplier = GetDamageMultiplier(owner);
+        
+        for (int i = 0; i < projectileCount; i++)
+        {
+            SkillHitbox hitbox = Instantiate(hitboxPrefab, position + GetSpawnOffset(i), rotation);
+            hitbox.Setup(owner, targets, multiplier, effect);
+
+            if (homing && hasTarget)
+            {
+                hitbox.HomeOn(target, i * launchInterval);
+            }
+        }
+
         return true;
     }
 
@@ -54,5 +71,16 @@ public class HitboxAbility : CombatAbility
             default:
                 return customMultiplier;
         }
+    }
+
+    private Vector3 GetSpawnOffset(int index)
+    {
+        if (projectileCount <= 1 || spawnRadius <= 0f)
+        {
+            return Vector3.zero;
+        }
+
+        float angle = index * Mathf.PI * 2f / projectileCount;
+        return new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f) * spawnRadius;
     }
 }

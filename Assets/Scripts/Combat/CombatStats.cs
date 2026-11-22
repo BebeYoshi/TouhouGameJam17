@@ -38,6 +38,8 @@ public class CombatStats : MonoBehaviour
     public float Attack => data.Attack * levelMultiplier * (1f + GetAttackBonus());
     public float Defense => data.Defense * levelMultiplier * (1f + GetDefenseBonus());
     public float MaxHealth => Mathf.Round(data.MaxHealth * levelMultiplier);
+    public float MissChance => GetStackedStrength(StatusEffectType.Blind, settings.MaxBlindChance);
+    public float HealReduction => GetStackedStrength(StatusEffectType.HealReduction, settings.MaxHealReduction);
 
     public bool IsAlive => currentHealth > 0f;
     public bool IsUltReady => data != null && data.HasUlt && !ultLocked && currentBooze >= maxBooze;
@@ -138,6 +140,27 @@ public class CombatStats : MonoBehaviour
     private float GetPassiveBoozeGainBonus()
     {
         return Passive != null ? Passive.GetBoozeGainBonus(this) : 0f;
+    }
+
+    private float GetStackedStrength(StatusEffectType type, float cap)
+    {
+        float remaining = 1f;
+
+        foreach (StatusEffect effect in effects)
+        {
+            if (effect.Type == type)
+            {
+                remaining *= 1f - Mathf.Clamp01(effect.Multiplier);
+            }
+        }
+
+        return Mathf.Min(cap, 1f - remaining);
+    }
+
+    private bool TryMiss()
+    {
+        float chance = MissChance;
+        return chance > 0f && UnityEngine.Random.value < chance;
     }
 
     private bool TryEvade()
@@ -289,7 +312,8 @@ public class CombatStats : MonoBehaviour
         {
             return;
         }
-
+        
+        amount *= 1f - HealReduction;
         float previousHealth = currentHealth;
 
         int roundedHeal = Mathf.RoundToInt(amount);
@@ -390,7 +414,7 @@ public class CombatStats : MonoBehaviour
 
     private bool DealDamage(CombatStats target, float multiplier, bool canBeEvaded)
     {
-        if (canBeEvaded && target.TryEvade())
+        if (canBeEvaded && (TryMiss() || target.TryEvade()))
         {
             return false;
         }

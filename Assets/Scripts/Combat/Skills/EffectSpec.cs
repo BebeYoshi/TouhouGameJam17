@@ -30,6 +30,12 @@ public class EffectSpec
             
             case StatusEffectType.HealOverTime:
                 return StatusEffect.HealOverTime(source, multiplier, duration);
+
+            case StatusEffectType.Blind:
+                return StatusEffect.Blind(multiplier, duration);
+            
+            case StatusEffectType.HealReduction:
+                return StatusEffect.HealReduction(multiplier, duration);
             
             default:
                 Debug.LogWarning($"Effect type '{type}' is not supported yet.");
