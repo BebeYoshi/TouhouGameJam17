@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 109615992}
   - component: {fileID: 109615991}
   - component: {fileID: 109615990}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Aliado3
   m_TagString: InimigoPlayer
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109615989}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 220536742}
   - component: {fileID: 220536741}
   - component: {fileID: 220536740}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Aliado2
   m_TagString: InimigoPlayer
   m_Icon: {fileID: 0}
@@ -576,7 +576,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220536739}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -806,7 +806,7 @@ GameObject:
   - component: {fileID: 259514784}
   - component: {fileID: 259514783}
   - component: {fileID: 259514788}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Inimigo1
   m_TagString: Inimigo
   m_Icon: {fileID: 0}
@@ -837,7 +837,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259514782}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -2005,7 +2005,7 @@ GameObject:
   - component: {fileID: 1052688419}
   - component: {fileID: 1052688420}
   - component: {fileID: 1052688421}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Aliado1
   m_TagString: InimigoPlayer
   m_Icon: {fileID: 0}
@@ -2121,7 +2121,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052688415}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -2238,7 +2238,7 @@ GameObject:
   - component: {fileID: 1073228627}
   - component: {fileID: 1073228626}
   - component: {fileID: 1073228625}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Inimigo2
   m_TagString: Inimigo
   m_Icon: {fileID: 0}
@@ -2298,7 +2298,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073228624}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -3602,7 +3602,7 @@ GameObject:
   - component: {fileID: 1818043218}
   - component: {fileID: 1818043217}
   - component: {fileID: 1818043216}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Inimigo3
   m_TagString: Inimigo
   m_Icon: {fileID: 0}
@@ -3662,7 +3662,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1818043215}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -4466,6 +4466,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973587002}
   m_CullTransparentMesh: 1
+--- !u!1 &533575046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 632496777}
+  - component: {fileID: 1365944596}
+  m_Layer: 0
+  m_Name: StageSetup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &632496777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533575046}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1365944596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533575046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c8f8a33700a27a40930574123330d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSetup
+  database: {fileID: 11400000, guid: f1d1151792c756f44b29ef76357dcab9, type: 2}
+  visuals: {fileID: 11400000, guid: badc1bd031923b643909143c122f136c, type: 2}
+  party: {fileID: 11400000, guid: d4cadc5f28e55b84d9b43f6e060011f1, type: 2}
+  encounter: {fileID: 11400000, guid: 7383023d0881e7987df0202514b612a3, type: 2}
+  allySlots:
+  - {fileID: 1052688421}
+  - {fileID: 220536740}
+  - {fileID: 109615990}
+  enemySlots:
+  - {fileID: 259514783}
+  - {fileID: 1073228626}
+  - {fileID: 1818043217}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4483,3 +4539,4 @@ SceneRoots:
   - {fileID: 1193231499}
   - {fileID: 520943181}
   - {fileID: 263926631}
+  - {fileID: 632496777}
