@@ -11,9 +11,8 @@ public partial class VerificaSkillCooldownCondition : Condition
     public override bool IsTrue()
     {
         combat = GameObject.GetComponent<CombatStats>();
-        Debug.Log("ESTADO DA SKILL" + combat.IsSkillReady);
         if(combat.IsSkillReady) return false;
-        else return false;
+        else return true;
     }
 
     public override void OnStart()

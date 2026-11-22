@@ -25,6 +25,7 @@ public partial class UsaSkillAction : Action
     protected override Status OnUpdate()
     {
         bool teste = combat.UseSkill(combatEnemy);
+        Debug.Log("DISPAROU SKILL");
         return Status.Success;
     }
 

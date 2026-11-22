@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Inimigo2
   - Inimigo
+  - InimigoPlayer
   layers:
   - Default
   - TransparentFX

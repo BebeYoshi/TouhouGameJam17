@@ -6,6 +6,12 @@ public class BattleManager : MonoBehaviour
 {
     [SerializeField] private List<CombatStats> inimigos;
     [SerializeField] private List<CombatStats> aliados;
+    [SerializeField] private string SceneName;
+    [SerializeField] private SceneLoader sceneLoader;
+    [SerializeField] private GameObject canvasVitoria;
+    [SerializeField] private GameObject canvasDerrota;
+    [SerializeField] int level;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,21 +25,29 @@ public class BattleManager : MonoBehaviour
     }
 
     private void DisparouMorteInimigo(CombatStats deadEnemy){
-        if(VerificaVitoria()) Debug.Log("ACABOU VENCEU");
+        if(VerificaVitoria()) {
+            canvasVitoria.SetActive(true);
+
+            // sceneLoader.CarregaCena("Cena 2");
+        };
 
     }
 
     private void DisparouMorteAliado(CombatStats deadAlly){
-        if(VerificaDerrota()) Debug.Log("ACABOU PERDEU");
+        if(VerificaDerrota())   canvasDerrota.SetActive(true);
+;
     }
 
     private bool VerificaVitoria(){
          foreach(CombatStats inimigo in inimigos){
             if(inimigo != null && inimigo.IsAlive){
+                Debug.Log("ENTROU NO FALSE VITORIA");
                 return false;
             }
-            return true;
+                            Debug.Log("ENTROU NO TRUE VITORIA");
+
         }
+        return true;
         throw new System.Exception("Deu merda");
 
     }
@@ -43,10 +57,8 @@ public class BattleManager : MonoBehaviour
             if(aliado != null && aliado.IsAlive){
              return false;
             }
-             return true;
          }
-         return false;
-
+        return true;
     }
     // Update is called once per frame
     void Update()
