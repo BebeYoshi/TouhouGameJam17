@@ -10,15 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5312975fe1c0e3a4e874813aef6d7aac, type: 3}
-  m_Name: GachaPull1
+  m_Name: GachaPull
   m_EditorClassIdentifier: Assembly-CSharp::GachaPull
-  _personagens:
-  - nome: Low CHance 3*
-    chance: 3
-    sprite: {fileID: 0}
-  - nome: High Chance 2*
-    chance: 9
-    sprite: {fileID: 0}
-  - nome: Highest Chance 1*
-    chance: 20
-    sprite: {fileID: 0}
+  _pullablePersonagens: {fileID: 0}
+  _personagens: []

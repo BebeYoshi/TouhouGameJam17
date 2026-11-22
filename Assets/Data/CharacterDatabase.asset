@@ -12,4 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9baaaea8b574c41955fb49cfed8456, type: 3}
   m_Name: CharacterDatabase
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDatabase
-  characters: []
+  characters:
+  - id: 323
+    displayName: Teste
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 0
+    attackType: 0
+    attackSpeed: 0
+    attackRange: 0
+    moveSpeed: 0
+    skillCooldown: 0
+    maxHealth: 0
+    attack: 0
+    defense: 0
+    maxBooze: 0
+    boozePerSecond: 0
+    boozeOnHit: 0
+    boozeOnHurt: 0
+    boozeOnKill: 0
+    basicMultiplier: 0
+    skillMultiplier: 0
+    ultMultiplier: 0
+    hasUlt: 1

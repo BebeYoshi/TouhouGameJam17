@@ -15,12 +15,97 @@ MonoBehaviour:
   characters:
   - id: 1233
     displayName: Teste personagem
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 1
+    pullChance: 1000
     role: 0
     attackType: 0
+    attackSpeed: 1
+    attackRange: 1.5
+    moveSpeed: 2
+    skillCooldown: 8
     maxHealth: 65
     attack: 12
     defense: 12
     maxBooze: 1
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 5
+    boozeOnKill: 10
     basicMultiplier: 0
     skillMultiplier: 0
     ultMultiplier: 0
+    hasUlt: 1
+  - id: 4343
+    displayName: 434
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 1
+    pullChance: 1000
+    role: 0
+    attackType: 0
+    attackSpeed: 1
+    attackRange: 1.5
+    moveSpeed: 2
+    skillCooldown: 8
+    maxHealth: 65
+    attack: 12
+    defense: 12
+    maxBooze: 1
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 5
+    boozeOnKill: 10
+    basicMultiplier: 0
+    skillMultiplier: 0
+    ultMultiplier: 0
+    hasUlt: 1
+  - id: ''''''''''
+    displayName: Teste personagem22
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 0
+    attackType: 0
+    attackSpeed: 1
+    attackRange: 1.5
+    moveSpeed: 2
+    skillCooldown: 8
+    maxHealth: 65
+    attack: 12
+    defense: 12
+    maxBooze: 1
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 5
+    boozeOnKill: 10
+    basicMultiplier: 0
+    skillMultiplier: 0
+    ultMultiplier: 0
+    hasUlt: 1
+  - id: 1232111
+    displayName: MaisFoda
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 0
+    attackType: 0
+    attackSpeed: 1
+    attackRange: 1.5
+    moveSpeed: 2
+    skillCooldown: 8
+    maxHealth: 65
+    attack: 12
+    defense: 12
+    maxBooze: 1
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 5
+    boozeOnKill: 10
+    basicMultiplier: 0
+    skillMultiplier: 0
+    ultMultiplier: 0
+    hasUlt: 1
