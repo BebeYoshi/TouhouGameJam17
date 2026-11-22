@@ -30,6 +30,9 @@ public class CharacterData
     [SerializeField, Min(0f)] private float boozeOnHurt = 5f;
     [SerializeField, Min(0f)] private float boozeOnKill = 10f;
 
+    [Header("Kit")]
+    [SerializeField] private PassiveAbility passive;
+
     [Header("Scaling")]
     [SerializeField, Min(0f)] private float basicMultiplier = 1f;
     [SerializeField, Min(0f)] private float skillMultiplier = 1.5f;
@@ -57,6 +60,8 @@ public class CharacterData
     public float BoozeOnHit => boozeOnHit;
     public float BoozeOnHurt => boozeOnHurt;
     public float BoozeOnKill => boozeOnKill;
+
+    public PassiveAbility Passive => passive;
 
     public float BasicMultiplier => basicMultiplier;
     public float SkillMultiplier => skillMultiplier;

@@ -19,20 +19,26 @@ public class CombatStats : MonoBehaviour
     private float attackTimer;
     private float skillTimer;
     private float levelMultiplier = 1f;
+    private float boozeLossOnHurtPercent;
+    private float boozeLossOnHurt;
+    private float maxBooze;
+    private bool ultLocked;
     
 
     public CharacterData Data => data;
     public float CurrentHealth => currentHealth;
     public float CurrentBooze => currentBooze;
-    public float BoozeGainMultiplier => Mathf.Max(0f, 1f + boozeGainBonus);
+    public float MaxBooze => maxBooze;
+    public float BoozeFraction => data != null && maxBooze > 0f ? currentBooze / maxBooze : 0f;
+    public float BoozeGainMultiplier => Mathf.Max(0f, 1f + boozeGainBonus + GetPassiveBoozeGainBonus());
     public int Level => level;
     public bool IsInitialized => data != null;
+    public float Attack => data.Attack * levelMultiplier * (1f + GetAttackBonus());
+    public float Defense => data.Defense * levelMultiplier * (1f + GetDefenseBonus());
     public float MaxHealth => Mathf.Round(data.MaxHealth * levelMultiplier);
-    public float Attack => data.Attack * levelMultiplier;
-    public float Defense => data.Defense * levelMultiplier;
 
     public bool IsAlive => currentHealth > 0f;
-    public bool IsUltReady => data != null && data.HasUlt && currentBooze >= data.MaxBooze;
+    public bool IsUltReady => data != null && data.HasUlt && !ultLocked && currentBooze >= maxBooze;
     public bool IsStunned => HasEffect(StatusEffectType.Stun);
     public bool CanAct => IsAlive && !IsStunned;
     public bool IsAttackReady => CanAct && attackTimer <= 0f;
@@ -44,6 +50,7 @@ public class CombatStats : MonoBehaviour
     public event Action UltReady;
     public event Action<float, float> HealthChanged;
     public event Action<CombatStats> Died;
+    public event Action Unleashed;
 
     private void Awake()
     {
@@ -80,14 +87,54 @@ public class CombatStats : MonoBehaviour
         levelMultiplier = settings.GetStatsMultiplier(level);
 
         currentHealth = MaxHealth;
+        maxBooze = data.MaxBooze;
         currentBooze = 0f;
         boozeGainBonus = 0f;
         attackTimer = 0f;
         skillTimer = 0f;
+        ultLocked = false;
+        boozeLossOnHurt = 0f;
+        boozeLossOnHurtPercent = 0f;
         effects.Clear();
+
+        if (data.Passive != null)
+        {
+            data.Passive.OnInitialized(this);
+        }
 
         enabled = true;
         return true;
+    }
+
+    private float GetAttackBonus()
+    {
+        return data.Passive != null ? data.Passive.GetAttackBonus(this) : 0f;
+    }
+
+    private float GetDefenseBonus()
+    {
+        return data.Passive != null ? data.Passive.GetDefenseBonus(this) : 0f;
+    }
+
+    private float GetDamageBonus(CombatStats target)
+    {
+        return data.Passive != null ? data.Passive.GetDamageBonus(this, target) : 0f;
+    }
+
+    private float GetPassiveBoozeGainBonus()
+    {
+        return data != null && data.Passive != null ? data.Passive.GetBoozeGainBonus(this) : 0f;
+    }
+
+    private bool TryEvade()
+    {
+        if (IsStunned)
+        {
+            return false;
+        }
+
+        float chance = data.Passive != null ? data.Passive.GetEvasionChance(this) : 0f;
+        return chance > 0f && UnityEngine.Random.value < chance;
     }
 
     private void Update()
@@ -113,6 +160,13 @@ public class CombatStats : MonoBehaviour
         }
 
         AddBooze(data.BoozeOnHurt);
+
+        float boozeLoss = boozeLossOnHurt + currentBooze * boozeLossOnHurtPercent;
+
+        if (boozeLoss > 0f)
+        {
+            AddBooze(-boozeLoss);
+        }
     }
 
     private bool ApplyDamage(float amount)
@@ -135,6 +189,12 @@ public class CombatStats : MonoBehaviour
         if (!IsAlive)
         {
             effects.Clear();
+
+            if (data.Passive != null)
+            {
+                data.Passive.OnDied(this);
+            }
+
             Died?.Invoke(this);
             return true;
         }
@@ -179,7 +239,11 @@ public class CombatStats : MonoBehaviour
             return;
         }
 
-        DealDamage(target, multiplier);
+        if (!DealDamage(target, multiplier, true))
+        {
+            return;
+        }
+
         AddBooze(data.BoozeOnHit);
 
         if (!target.IsAlive)
@@ -284,7 +348,7 @@ public class CombatStats : MonoBehaviour
             return false;
         }
 
-        DealDamage(target, data.UltMultiplier);
+        DealDamage(target, data.UltMultiplier, false);
         return true;
     }
 
@@ -293,10 +357,16 @@ public class CombatStats : MonoBehaviour
         return IsAlive && target != null && target.IsAlive;
     }
 
-    private void DealDamage(CombatStats target, float multiplier)
+    private bool DealDamage(CombatStats target, float multiplier, bool canBeEvaded)
     {
-        float damage = DamageCalculator.CalculateDamage(Attack, target.Defense, multiplier);
+        if (canBeEvaded && target.TryEvade())
+        {
+            return false;
+        }
+
+        float damage = DamageCalculator.CalculateDamage(Attack, target.Defense, multiplier * (1f + GetDamageBonus(target)));
         target.TakeDamage(damage);
+        return true;
     }
 
     public void AddBooze(float amount)
@@ -319,11 +389,11 @@ public class CombatStats : MonoBehaviour
         float previousBooze = currentBooze;
         bool wasUltReady = IsUltReady;
 
-        currentBooze = Mathf.Clamp(currentBooze + amount, 0f, data.MaxBooze);
+        currentBooze = Mathf.Clamp(currentBooze + amount, 0f, maxBooze);
 
         if (currentBooze != previousBooze)
         {
-            BoozeChanged?.Invoke(currentBooze, data.MaxBooze);
+            BoozeChanged?.Invoke(currentBooze, maxBooze);
         }
 
         if (!wasUltReady && IsUltReady)
@@ -350,8 +420,25 @@ public class CombatStats : MonoBehaviour
         }
 
         currentBooze = 0f;
-        BoozeChanged?.Invoke(currentBooze, data.MaxBooze);
+        BoozeChanged?.Invoke(currentBooze, maxBooze);
         return true;
+    }
+
+    public void Unleash(float newMaxBooze, float lossOnHurt, float lossOnHurtPercent)
+    {
+        if (!IsAlive)
+        {
+            return;
+        }
+
+        maxBooze = Mathf.Max(1f, newMaxBooze);
+        ultLocked = true;
+        boozeLossOnHurt = lossOnHurt;
+        boozeLossOnHurtPercent = lossOnHurtPercent;
+
+        currentBooze = 0f;
+        BoozeChanged?.Invoke(currentBooze, maxBooze);
+        Unleashed?.Invoke();
     }
     
 }
