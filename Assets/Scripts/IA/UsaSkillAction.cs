@@ -9,13 +9,22 @@ using Unity.Properties;
 public partial class UsaSkillAction : Action
 {
 
+    [SerializeReference] public BlackboardVariable<GameObject> Agente;
+    [SerializeReference] public BlackboardVariable<GameObject> Inimigo;
+    private CombatStats combat;
+    private CombatStats combatEnemy;
+
     protected override Status OnStart()
     {
+        combat = GameObject.GetComponent<CombatStats>();
+        combatEnemy = Inimigo.Value.GetComponent<CombatStats>();
+
         return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
+        bool teste = combat.UseSkill(combatEnemy);
         return Status.Success;
     }
 

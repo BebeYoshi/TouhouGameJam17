@@ -23,8 +23,6 @@ public partial class VerificaSeSobrouAlgumInimigoCondition : Condition
 
                 if(combatEnemy.IsAlive ){
                     return true;
-
-                    Debug.Log("ALGUEM VIVO");
                 }
             }
         }

@@ -19,13 +19,11 @@ public class BattleManager : MonoBehaviour
     }
 
     private void DisparouMorteInimigo(CombatStats deadEnemy){
-        Debug.Log("DISPAROU 1");
         if(VerificaVitoria()) Debug.Log("ACABOU VENCEU");
 
     }
 
     private void DisparouMorteAliado(CombatStats deadAlly){
-        Debug.Log("DISPAROU 2");
         if(VerificaDerrota()) Debug.Log("ACABOU PERDEU");
     }
 

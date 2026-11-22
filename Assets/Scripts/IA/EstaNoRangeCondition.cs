@@ -15,7 +15,6 @@ public partial class EstaNoRangeCondition : Condition
     {
         // Range.Value = 1.5f;
         rb = GameObject.GetComponent<Rigidbody2D>();
-                   Debug.Log(Inimigo.Value.transform.position);
         Vector2 posicaoDesejada = Inimigo.Value.transform.position;
         float distancia = Vector2.Distance(rb.position, posicaoDesejada);
         if(distancia <= 1.5f){
@@ -23,7 +22,6 @@ public partial class EstaNoRangeCondition : Condition
 
         }
         else{
-        Debug.Log("falso");
             return false;
         }
     }
