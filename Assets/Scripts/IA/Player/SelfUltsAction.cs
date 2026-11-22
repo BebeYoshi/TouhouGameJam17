@@ -16,7 +16,7 @@ public partial class SelfUltsAction : Action
     protected override Status OnStart()
     {
         combat = GameObject.GetComponent<CombatStats>();
-        combatEnemy = Inimigo.Value.GetComponent<CombatStats>();
+        combatEnemy = Inimigo != null && Inimigo.Value != null? Inimigo.Value.GetComponent<CombatStats>() : null;
 
         return Status.Running;
     }

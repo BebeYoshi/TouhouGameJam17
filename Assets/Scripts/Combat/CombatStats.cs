@@ -61,6 +61,9 @@ public class CombatStats : MonoBehaviour
     public event Action<CombatStats> Died;
     public event Action Unleashed;
     public event Action<CombatStats> Revived;
+    public event Action<CombatStats> AttackPerformed;
+    public event Action<CombatStats> SkillUsed;
+    public event Action<CombatStats> UltUsed;
 
     private void Awake()
     {
@@ -81,6 +84,12 @@ public class CombatStats : MonoBehaviour
     private void OnDisable()
     {
         BattleRoster.Unregister(this);
+    }
+
+    public bool Initialize(CharacterDatabase newDatabase, string id, int startLevel, BattleSide startSide)
+    {
+        database = newDatabase;
+        return Initialize(id, startLevel, startSide);
     }
 
     public bool Initialize(string id, int startLevel, BattleSide startSide)
@@ -282,6 +291,7 @@ public class CombatStats : MonoBehaviour
         }
 
         attackTimer = 1f / data.AttackSpeed;
+        AttackPerformed?.Invoke(target);
         return true;
     }
 
@@ -298,6 +308,7 @@ public class CombatStats : MonoBehaviour
         }
 
         skillTimer = data.SkillCooldown;
+        SkillUsed?.Invoke(target);
         return true;
     }
 
@@ -456,6 +467,7 @@ public class CombatStats : MonoBehaviour
         }
 
         TryUseUlt();
+        UltUsed?.Invoke(target);
         return true;
     }
 

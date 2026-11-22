@@ -12,8 +12,7 @@ public partial class IsUltimateReadyCondition : Condition
     public override bool IsTrue()
     {
         combat = GameObject.GetComponent<CombatStats>();
-        if(combat.IsUltReady) return false;
-        else return true;
+        return combat != null && combat.IsUltReady;
     }
     public override void OnStart()
     {
