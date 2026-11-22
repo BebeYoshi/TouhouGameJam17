@@ -10,6 +10,7 @@ public class CombatStats : MonoBehaviour
     [SerializeField] private string characterId;
     [SerializeField] private CombatSettings settings;
     [SerializeField, Min(1)] private int level = 1;
+    [SerializeField] private BattleSide side = BattleSide.Player;
 
     private CharacterData data;
     private readonly List<StatusEffect> effects = new List<StatusEffect>();
@@ -32,6 +33,7 @@ public class CombatStats : MonoBehaviour
     public float BoozeFraction => data != null && maxBooze > 0f ? currentBooze / maxBooze : 0f;
     public float BoozeGainMultiplier => Mathf.Max(0f, 1f + boozeGainBonus + GetPassiveBoozeGainBonus());
     public int Level => level;
+    public BattleSide Side => side;
     public bool IsInitialized => data != null;
     public float Attack => data.Attack * levelMultiplier * (1f + GetAttackBonus());
     public float Defense => data.Defense * levelMultiplier * (1f + GetDefenseBonus());
@@ -42,8 +44,9 @@ public class CombatStats : MonoBehaviour
     public bool IsStunned => HasEffect(StatusEffectType.Stun);
     public bool CanAct => IsAlive && !IsStunned;
     public bool IsAttackReady => CanAct && attackTimer <= 0f;
-    public bool IsSkillReady => CanAct && skillTimer <= 0f;
+    public bool IsSkillReady => CanAct && data.Skill != null && skillTimer <= 0f;
     public float SkillCooldownRemaining => skillTimer;
+    private PassiveAbility Passive => data != null ? data.Passive : null;
      
 
     public event Action<float, float> BoozeChanged;
@@ -60,10 +63,20 @@ public class CombatStats : MonoBehaviour
             return;
         }
 
-        Initialize(characterId, level);
-    } 
+        Initialize(characterId, level, side);
+    }
 
-    public bool Initialize(string id, int startLevel)
+    private void OnEnable()
+    {
+        BattleRoster.Register(this);
+    }
+
+    private void OnDisable()
+    {
+        BattleRoster.Unregister(this);
+    }
+
+    public bool Initialize(string id, int startLevel, BattleSide startSide)
     {
         if (database == null || settings == null)
         {
@@ -83,7 +96,8 @@ public class CombatStats : MonoBehaviour
 
         data = found;
         characterId = id;
-        level = settings.ClampLevel(startLevel);
+        side = startSide;
+        level =settings.ClampLevel(startLevel);
         levelMultiplier = settings.GetStatsMultiplier(level);
 
         currentHealth = MaxHealth;
@@ -97,9 +111,9 @@ public class CombatStats : MonoBehaviour
         boozeLossOnHurtPercent = 0f;
         effects.Clear();
 
-        if (data.Passive != null)
+        if (Passive != null)
         {
-            data.Passive.OnInitialized(this);
+            Passive.OnInitialized(this);
         }
 
         enabled = true;
@@ -108,22 +122,22 @@ public class CombatStats : MonoBehaviour
 
     private float GetAttackBonus()
     {
-        return data.Passive != null ? data.Passive.GetAttackBonus(this) : 0f;
+        return Passive != null ? Passive.GetAttackBonus(this) : 0f;
     }
 
     private float GetDefenseBonus()
     {
-        return data.Passive != null ? data.Passive.GetDefenseBonus(this) : 0f;
+        return Passive != null ? Passive.GetDefenseBonus(this) : 0f;
     }
 
     private float GetDamageBonus(CombatStats target)
     {
-        return data.Passive != null ? data.Passive.GetDamageBonus(this, target) : 0f;
+        return Passive != null ? Passive.GetDamageBonus(this, target) : 0f;
     }
 
     private float GetPassiveBoozeGainBonus()
     {
-        return data != null && data.Passive != null ? data.Passive.GetBoozeGainBonus(this) : 0f;
+        return Passive != null ? Passive.GetBoozeGainBonus(this) : 0f;
     }
 
     private bool TryEvade()
@@ -133,7 +147,7 @@ public class CombatStats : MonoBehaviour
             return false;
         }
 
-        float chance = data.Passive != null ? data.Passive.GetEvasionChance(this) : 0f;
+        float chance = Passive != null ? Passive.GetEvasionChance(this) : 0f;
         return chance > 0f && UnityEngine.Random.value < chance;
     }
 
@@ -178,7 +192,7 @@ public class CombatStats : MonoBehaviour
 
         float previousHealth = currentHealth;
 
-        int roundedDamage = Mathf.RoundToInt(amount);
+        int roundedDamage = Mathf.Max(1, Mathf.RoundToInt(amount));
         currentHealth = Mathf.Max(0f, currentHealth - roundedDamage);
 
         if (currentHealth != previousHealth)
@@ -190,9 +204,9 @@ public class CombatStats : MonoBehaviour
         {
             effects.Clear();
 
-            if (data.Passive != null)
+            if (Passive != null)
             {
-                data.Passive.OnDied(this);
+                Passive.OnDied(this);
             }
 
             Died?.Invoke(this);
@@ -209,19 +223,34 @@ public class CombatStats : MonoBehaviour
             return false;
         }
 
-        PerformAttack(target, data.BasicMultiplier);
+        if (data.BasicAttackAbility != null)
+        {
+            if(!data.BasicAttackAbility.Execute(this, target))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            PerformAttack(target, data.BasicMultiplier);
+        }
+
         attackTimer = 1f / data.AttackSpeed;
         return true;
     }
 
     public bool UseSkill(CombatStats target)
     {
-        if (!IsSkillReady || !CanHit(target))
+        if (!IsSkillReady || data.Skill == null)
         {
             return false;
         }
 
-        PerformAttack(target, data.SkillMultiplier);
+        if (!data.Skill.Execute(this, target))
+        {
+            return false;
+        }
+
         skillTimer = data.SkillCooldown;
         return true;
     }
@@ -232,24 +261,26 @@ public class CombatStats : MonoBehaviour
             && Vector2.Distance(transform.position, target.transform.position) <= data.AttackRange;
     }
 
-    private void PerformAttack(CombatStats target, float multiplier)
+    public bool PerformAttack(CombatStats target, float multiplier)
     {
-        if (!CanHit(target))
+        if (target == null || !target.IsAlive)
         {
-            return;
+            return false;
         }
 
         if (!DealDamage(target, multiplier, true))
         {
-            return;
+            return false;
         }
 
         AddBooze(data.BoozeOnHit);
 
         if (!target.IsAlive)
         {
-            AddBooze(data.BoozeOnKill);
+            RewardKill();
         }
+
+        return true;
     }
 
     public void Heal(float amount)
@@ -326,7 +357,7 @@ public class CombatStats : MonoBehaviour
 
                 if (ApplyDamage(damage) && effect.Source != null)
                 {
-                    effect.Source.AddBooze(effect.Source.Data.BoozeOnKill);
+                    effect.Source.RewardKill();
                 }
                 break;
 
@@ -386,10 +417,15 @@ public class CombatStats : MonoBehaviour
             amount *= BoozeGainMultiplier;
         }
 
+        SetBooze(currentBooze + amount);
+    }
+
+    private void SetBooze(float value)
+    {
         float previousBooze = currentBooze;
         bool wasUltReady = IsUltReady;
 
-        currentBooze = Mathf.Clamp(currentBooze + amount, 0f, maxBooze);
+        currentBooze = Mathf.Clamp(value, 0f, maxBooze);
 
         if (currentBooze != previousBooze)
         {
@@ -400,6 +436,11 @@ public class CombatStats : MonoBehaviour
         {
             UltReady?.Invoke();
         }
+    }
+
+    private void RewardKill()
+    {
+        AddBooze(data.BoozeOnKill);
     }
 
     public void AddBoozeGainBonus(float bonus)
@@ -419,8 +460,7 @@ public class CombatStats : MonoBehaviour
             return false;
         }
 
-        currentBooze = 0f;
-        BoozeChanged?.Invoke(currentBooze, maxBooze);
+        SetBooze(0f);
         return true;
     }
 

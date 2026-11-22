@@ -41,3 +41,28 @@ public enum Species
     Doll,
     Human
 }
+
+public enum BattleSide
+{
+    Player,
+    Enemy
+}
+
+public enum HitboxTargets
+{
+    Enemies, 
+    Allies
+}
+
+public enum HitboxSpawn
+{
+    Owner,
+    Target
+}
+
+public enum MultiplierSource
+{
+    Basic,
+    Skill,
+    Custom
+}
