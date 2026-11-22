@@ -1,16 +1,30 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "CharacterDatabase", menuName = "Scriptable Objects/CharacterDatabase")]
 public class CharacterDatabase : ScriptableObject
 {
     [SerializeField] private List<CharacterData> characters = new List<CharacterData>();
 
+    public bool insertNewCharacter(CharacterData characterToAdd){
+        if(FindById(characterToAdd.id) == null){
+        characters.Add(characterToAdd);
+        return true;
+        }
+        else return false;
+    }
+
+    public List<CharacterData> ReturnOnlyPullable(){
+        return characters.Where(c => c.isPullable).ToList();
+    }
+
     public CharacterData FindById(string id)
     {
         foreach (CharacterData character in characters)
         {
-            if (character.Id == id)
+            Debug.Log("ID DO PERSONAGEM" + character.id);
+            if (character.id == id)
             {
                 return character;
             }
@@ -18,6 +32,11 @@ public class CharacterDatabase : ScriptableObject
 
         Debug.LogWarning($"Character '{id}' not found.");
         return null;
+    }
+
+    public List<CharacterData> ReturnAll()
+    {   
+        return characters;
     }
 
     private void OnValidate()

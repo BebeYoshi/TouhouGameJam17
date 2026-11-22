@@ -4,9 +4,12 @@ using UnityEngine;
 public class CharacterData
 {
     [Header("Identity")]
-    [SerializeField] private string id = "";
-    [SerializeField] private string displayName = "";
+    [SerializeField] public string id = "";
+    [SerializeField] public string displayName = "";
     [SerializeField] private Species species = Species.Youkai;
+    [SerializeField] public Sprite sprite;
+    [SerializeField] public bool isPullable;
+    [SerializeField] public float pullChance;
 
     [Header("Combat Profile")]
     [SerializeField] private CharacterRole role = CharacterRole.DPS;

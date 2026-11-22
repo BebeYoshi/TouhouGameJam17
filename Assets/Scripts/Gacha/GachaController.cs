@@ -11,6 +11,7 @@ public class GachaController : MonoBehaviour
         [SerializeField] public GachaPull banner1;
         [SerializeField] private TextMeshProUGUI[] nomes;
         public bool coroutineOff;
+        private GachaPull runtimeBanner;
 
         [SerializeField] public string[] lines;
         public float textSpeed;
@@ -20,6 +21,7 @@ public class GachaController : MonoBehaviour
 
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -30,24 +32,33 @@ public class GachaController : MonoBehaviour
     }
     
     public void retornaUmResultado(){
-        GachaPull.Personagens personagem = banner1.SortearPersonagem();
-        testeNomePersonagem = personagem.nome;
-       StartCoroutine (ShowResults(1));
+        runtimeBanner = Instantiate(banner1);
+        StartCoroutine (ShowResults(1));
+        if (runtimeBanner != null)
+        {Destroy(runtimeBanner);
+        runtimeBanner = null;
+        }
+
     }
 
     public void retornaCincoResultados(){
-       StartCoroutine (ShowResults(5));
+            runtimeBanner = Instantiate(banner1);
+            StartCoroutine (ShowResults(5));
+            if (runtimeBanner != null)
+            {Destroy(runtimeBanner);
+            runtimeBanner = null;
+            }
         }
 
     IEnumerator ShowResults(int quantidade)
 {
     for (int j = 0; j < quantidade; j++)
     {
-        GachaPull.Personagens personagem = banner1.SortearPersonagem();
-
+        Debug.Log("SORTEOU " + j);
+        GachaPull.Personagens personagem = runtimeBanner.SortearPersonagem();
         nomes[j].text = "";
 
-        foreach (char c in ". . . . .")
+        foreach (char c in ". . . . .   ")
         {
             nomes[j].text += c;
             yield return new WaitForSeconds(textSpeed);
