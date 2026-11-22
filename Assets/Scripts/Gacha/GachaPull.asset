@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5312975fe1c0e3a4e874813aef6d7aac, type: 3}
   m_Name: GachaPull
   m_EditorClassIdentifier: Assembly-CSharp::GachaPull
-  _pullablePersonagens: {fileID: 0}
-  _personagens: []
+  _pullablePersonagens: {fileID: 11400000, guid: da4ea11529b434948a66be50c391e8be, type: 2}
+  _personagens:
+  - nome: Teste personagem
+    chance: 1000
+    sprite: {fileID: 0}
+    id: 1233
+  - nome: 434
+    chance: 1000
+    sprite: {fileID: 0}
+    id: 4343
+  _team: {fileID: 11400000, guid: c8bfe9923c687214dac1e0a8b6483828, type: 2}
+  repetido: 0

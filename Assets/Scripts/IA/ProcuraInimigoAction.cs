@@ -10,6 +10,8 @@ public partial class ProcuraInimigoAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Circulo;
     private Rigidbody2D rb;
+    private CombatStats combatEnemy;
+
 
     protected override Status OnStart()
     {
@@ -25,7 +27,10 @@ public partial class ProcuraInimigoAction : Action
         foreach(var inimigo in Inimigos){
             // var i = (inimigo.transform.position - position).sqrMagnitude;
             var i = Vector2.Distance(rb.position, inimigo.transform.position);
-            if(i < dist ){
+            combatEnemy = inimigo.GetComponent<CombatStats>();
+
+
+            if(i < dist && combatEnemy.IsAlive ){
                 maisProximo = inimigo;
                 dist = i;
             }

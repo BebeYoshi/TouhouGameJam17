@@ -25,7 +25,7 @@ MonoBehaviour:
     attackRange: 1.5
     moveSpeed: 2
     skillCooldown: 8
-    maxHealth: 65
+    maxHealth: 12
     attack: 12
     defense: 12
     maxBooze: 1
@@ -33,7 +33,7 @@ MonoBehaviour:
     boozeOnHit: 5
     boozeOnHurt: 5
     boozeOnKill: 10
-    basicMultiplier: 0
+    basicMultiplier: 1
     skillMultiplier: 0
     ultMultiplier: 0
     hasUlt: 1
@@ -57,7 +57,7 @@ MonoBehaviour:
     boozeOnHit: 5
     boozeOnHurt: 5
     boozeOnKill: 10
-    basicMultiplier: 0
+    basicMultiplier: 1
     skillMultiplier: 0
     ultMultiplier: 0
     hasUlt: 1
@@ -81,7 +81,7 @@ MonoBehaviour:
     boozeOnHit: 5
     boozeOnHurt: 5
     boozeOnKill: 10
-    basicMultiplier: 0
+    basicMultiplier: 1
     skillMultiplier: 0
     ultMultiplier: 0
     hasUlt: 1
@@ -97,7 +97,7 @@ MonoBehaviour:
     attackRange: 1.5
     moveSpeed: 2
     skillCooldown: 8
-    maxHealth: 65
+    maxHealth: 15
     attack: 12
     defense: 12
     maxBooze: 1
@@ -105,7 +105,7 @@ MonoBehaviour:
     boozeOnHit: 5
     boozeOnHurt: 5
     boozeOnKill: 10
-    basicMultiplier: 0
+    basicMultiplier: 1
     skillMultiplier: 0
     ultMultiplier: 0
     hasUlt: 1
