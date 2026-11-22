@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9baaaea8b574c41955fb49cfed8456, type: 3}
+  m_Name: PoolPersonagem
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDatabase
+  characters:
+  - id: 1233
+    displayName: Teste personagem
+    role: 0
+    attackType: 0
+    maxHealth: 65
+    attack: 12
+    defense: 12
+    maxBooze: 1
+    basicMultiplier: 0
+    skillMultiplier: 0
+    ultMultiplier: 0
