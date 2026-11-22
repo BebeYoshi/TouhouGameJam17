@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80a3891b3ed15d4db1afcc61ee9d4cc, type: 3}
+  m_Name: Reimu_Ult_FantasySeal
+  m_EditorClassIdentifier: Assembly-CSharp::HitboxAbility
+  hitboxPrefab: {fileID: 2481867132751478747, guid: c450a87c07f3d7045941a29c5507125a, type: 3}
+  spawnAt: 0
+  targets: 0
+  multiplierSource: 2
+  customMultiplier: 0.75
+  effect:
+    apply: 0
+    type: 1
+    multiplier: 0.2
+    duration: 3
+    dotKind: 0
+  projectileCount: 6
+  spawnRadius: 0.6
+  launchInterval: 0
+  homing: 1
+  spreadAcrossEnemies: 1
+  outwardSpeed: 4
+  outwardDuration: 0.4

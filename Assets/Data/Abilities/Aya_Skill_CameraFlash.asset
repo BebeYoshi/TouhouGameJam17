@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80a3891b3ed15d4db1afcc61ee9d4cc, type: 3}
+  m_Name: Aya_Skill_CameraFlash
+  m_EditorClassIdentifier: Assembly-CSharp::HitboxAbility
+  hitboxPrefab: {fileID: 6825728349659068301, guid: 041697258d9e03b41869621e1c892716, type: 3}
+  spawnAt: 0
+  targets: 0
+  multiplierSource: 1
+  customMultiplier: 0
+  effect:
+    apply: 1
+    type: 4
+    multiplier: 0.1
+    duration: 4
+    dotKind: 0
+  projectileCount: 1
+  spawnRadius: 0
+  launchInterval: 0
+  homing: 0
+  spreadAcrossEnemies: 0
+  outwardSpeed: 0
+  outwardDuration: 0
