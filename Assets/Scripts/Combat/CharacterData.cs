@@ -37,6 +37,7 @@ public class CharacterData
     [SerializeField] private CombatAbility basicAttackAbility;
     [SerializeField] private PassiveAbility passive;
     [SerializeField] private CombatAbility skill;
+    [SerializeField] private CombatAbility ultAbility;
 
     [Header("Scaling")]
     [SerializeField, Min(0f)] private float basicMultiplier = 1f;
@@ -69,6 +70,7 @@ public class CharacterData
     public CombatAbility BasicAttackAbility => basicAttackAbility;
     public PassiveAbility Passive => passive;
     public CombatAbility Skill => skill;
+    public CombatAbility UltAbility => ultAbility;
 
     public float BasicMultiplier => basicMultiplier;
     public float SkillMultiplier => skillMultiplier;

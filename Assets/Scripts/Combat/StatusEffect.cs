@@ -31,6 +31,11 @@ public class StatusEffect
         return new StatusEffect(StatusEffectType.Stun, duration, null, 0f, DotKind.None);
     }
 
+    public static StatusEffect Revived(float duration)
+    {
+        return new StatusEffect(StatusEffectType.Revived, duration, null, 0f, DotKind.None);
+    }
+
     public static StatusEffect BoozeBlock(float duration)
     {
         return new StatusEffect(StatusEffectType.BoozeBlock, duration, null, 0f, DotKind.None);
@@ -41,6 +46,16 @@ public class StatusEffect
         return new StatusEffect(StatusEffectType.Blind, duration, null, missChance, DotKind.None);
     }
 
+    public static StatusEffect DamageBuff(float bonus, float duration)
+    {
+        return new StatusEffect(StatusEffectType.DamageBuff, duration, null, bonus, DotKind.None);
+    }
+
+    public static StatusEffect BoozeGainBuff(float bonus, float duration)
+    {
+        return new StatusEffect(StatusEffectType.BoozeGainBuff, duration, null, bonus, DotKind.None);
+    }
+    
     public static StatusEffect HealReduction(float reduction, float duration)
     {
         return new StatusEffect(StatusEffectType.HealReduction, duration, null, reduction, DotKind.None);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HitboxAbility", menuName = "Scriptable Objects/Abilities/Hitbox Ability")]
@@ -15,13 +16,21 @@ public class HitboxAbility : CombatAbility
     [SerializeField, Min(0f)] private float spawnRadius = 0f;
     [SerializeField, Min(0f)] private float launchInterval = 0f;
     [SerializeField] private bool homing = false;
+    [SerializeField] private bool spreadAcrossEnemies = false;
+    [SerializeField, Min(0f)] private float outwardSpeed = 0f;
+    [SerializeField, Min(0f)] private float outwardDuration = 0f;
 
-    public override bool Execute(CombatStats owner, CombatStats target)
+    public override bool Execute(CombatStats owner, CombatStats target, AttackKind kind)
     {
         if (hitboxPrefab == null)
         {
             Debug.LogError($"{name}: hitbox prefab not assigned.", this);
             return false;
+        }
+
+        if ((target == null || !target.IsAlive || target.Side == owner.Side) && targets == HitboxTargets.Enemies)
+        {
+            target = BattleRoster.GetNearestEnemy(owner);
         }
 
         bool hasTarget = target != null && target.IsAlive;
@@ -42,35 +51,25 @@ public class HitboxAbility : CombatAbility
             rotation = Quaternion.Euler(0f, 0f, angle);
         }
 
-        float multiplier = GetDamageMultiplier(owner);
+        float multiplier = ResolveMultiplier(owner, multiplierSource, customMultiplier);
         
+        List<CombatStats> spreadTargets = spreadAcrossEnemies ? BattleRoster.GetNearestEnemies(owner, projectileCount) : null;
+
         for (int i = 0; i < projectileCount; i++)
         {
-            SkillHitbox hitbox = Instantiate(hitboxPrefab, position + GetSpawnOffset(i), rotation);
-            hitbox.Setup(owner, targets, multiplier, effect);
+            Vector3 offset = GetSpawnOffset(i);
+            SkillHitbox hitbox = Instantiate(hitboxPrefab, position + offset, rotation);
+            hitbox.Setup(owner, targets, multiplier, effect, kind);
 
             if (homing && hasTarget)
             {
-                hitbox.HomeOn(target, i * launchInterval);
+                CombatStats homingTarget = spreadTargets != null && spreadTargets.Count > 0 ? spreadTargets[i % spreadTargets.Count] : target;
+                Vector2 outwardVelocity = (Vector2)offset.normalized * outwardSpeed;
+                hitbox.HomeOn(homingTarget, outwardDuration + i * launchInterval, outwardVelocity);
             }
         }
 
         return true;
-    }
-
-    private float GetDamageMultiplier(CombatStats owner)
-    {
-        switch (multiplierSource)
-        {
-            case MultiplierSource.Basic:
-                return owner.Data.BasicMultiplier;
-
-            case MultiplierSource.Skill:
-                return owner.Data.SkillMultiplier;
-
-            default:
-                return customMultiplier;
-        }
     }
 
     private Vector3 GetSpawnOffset(int index)

@@ -33,6 +33,12 @@ public class EffectSpec
 
             case StatusEffectType.Blind:
                 return StatusEffect.Blind(multiplier, duration);
+
+            case StatusEffectType.DamageBuff:
+                return StatusEffect.DamageBuff(multiplier, duration);
+
+            case StatusEffectType.BoozeGainBuff:
+                return StatusEffect.BoozeGainBuff(multiplier, duration);
             
             case StatusEffectType.HealReduction:
                 return StatusEffect.HealReduction(multiplier, duration);
