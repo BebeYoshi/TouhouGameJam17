@@ -48,25 +48,25 @@ MonoBehaviour:
     isPullable: 0
     pullChance: 0
     role: 2
-    attackType: 0
+    attackType: 1
     attackSpeed: 1.05
-    attackRange: 1.2
-    moveSpeed: 3.2
+    attackRange: 5
+    moveSpeed: 2.8
     skillCooldown: 8
-    maxHealth: 450
-    attack: 66
-    defense: 20
+    maxHealth: 420
+    attack: 64
+    defense: 18
     maxBooze: 100
     boozePerSecond: 1
     boozeOnHit: 5
     boozeOnHurt: 5
     boozeOnKill: 10
-    basicAttackAbility: {fileID: 0}
+    basicAttackAbility: {fileID: 11400000, guid: 7d9f3c8f1f272ed45bbd4b398c594d99, type: 2}
     passive: {fileID: 11400000, guid: e216df10dd614c045a090fec57a57281, type: 2}
-    skill: {fileID: 11400000, guid: ecd96b74a6c201c4e961afc838371c12, type: 2}
+    skill: {fileID: 11400000, guid: 01db867c827b4328a9a8e4391885853b, type: 2}
     ultAbility: {fileID: 0}
     basicMultiplier: 1
-    skillMultiplier: 1.6
+    skillMultiplier: 1.65
     ultMultiplier: 0
     hasUlt: 0
   - id: fairy
@@ -137,9 +137,9 @@ MonoBehaviour:
     attackRange: 1.4
     moveSpeed: 2.6
     skillCooldown: 10
-    maxHealth: 540
-    attack: 56
-    defense: 26
+    maxHealth: 460
+    attack: 66
+    defense: 20
     maxBooze: 100
     boozePerSecond: 1
     boozeOnHit: 5
@@ -221,13 +221,13 @@ MonoBehaviour:
     attackRange: 5
     moveSpeed: 3.6
     skillCooldown: 8
-    maxHealth: 450
-    attack: 74
-    defense: 20
+    maxHealth: 800
+    attack: 60
+    defense: 38
     maxBooze: 100
     boozePerSecond: 1
     boozeOnHit: 5
-    boozeOnHurt: 4
+    boozeOnHurt: 3.5
     boozeOnKill: 10
     basicAttackAbility: {fileID: 11400000, guid: 7d9f3c8f1f272ed45bbd4b398c594d99, type: 2}
     passive: {fileID: 11400000, guid: a19c2cfe75008a54f9c9e04bcd47a33a, type: 2}
@@ -361,9 +361,9 @@ MonoBehaviour:
     attackRange: 5.5
     moveSpeed: 2.8
     skillCooldown: 10
-    maxHealth: 2300
+    maxHealth: 1150
     attack: 44
-    defense: 42
+    defense: 40
     maxBooze: 100
     boozePerSecond: 1
     boozeOnHit: 5
@@ -389,13 +389,13 @@ MonoBehaviour:
     attackRange: 1.4
     moveSpeed: 2.5
     skillCooldown: 9
-    maxHealth: 8000
-    attack: 28
-    defense: 64
+    maxHealth: 6200
+    attack: 24
+    defense: 58
     maxBooze: 100
     boozePerSecond: 1
     boozeOnHit: 5
-    boozeOnHurt: 1
+    boozeOnHurt: 0.8
     boozeOnKill: 10
     basicAttackAbility: {fileID: 0}
     passive: {fileID: 11400000, guid: 862be33e30aa92f47a5c88d916168c29, type: 2}

@@ -16,6 +16,7 @@ public class HitboxAbility : CombatAbility
     [SerializeField, Min(0f)] private float spawnRadius = 0f;
     [SerializeField, Min(0f)] private float launchInterval = 0f;
     [SerializeField] private bool homing = false;
+    [SerializeField, Range(0f, 180f)] private float spreadAngle = 0f;
     [SerializeField] private bool spreadAcrossEnemies = false;
     [SerializeField, Min(0f)] private float outwardSpeed = 0f;
     [SerializeField, Min(0f)] private float outwardDuration = 0f;
@@ -58,7 +59,7 @@ public class HitboxAbility : CombatAbility
         for (int i = 0; i < projectileCount; i++)
         {
             Vector3 offset = GetSpawnOffset(i);
-            SkillHitbox hitbox = Instantiate(hitboxPrefab, position + offset, rotation);
+            SkillHitbox hitbox = Instantiate(hitboxPrefab, position + offset, rotation * GetSpreadRotation(i));
             hitbox.Setup(owner, targets, multiplier, effect, kind);
 
             if (homing && hasTarget)
@@ -70,6 +71,17 @@ public class HitboxAbility : CombatAbility
         }
 
         return true;
+    }
+
+    private Quaternion GetSpreadRotation(int index)
+    {
+        if (projectileCount <= 1 || spreadAngle <= 0f)
+        {
+            return Quaternion.identity;
+        }
+
+        float angle = (index - (projectileCount - 1) / 2f) * spreadAngle;
+        return Quaternion.Euler(0f, 0f, angle);
     }
 
     private Vector3 GetSpawnOffset(int index)
