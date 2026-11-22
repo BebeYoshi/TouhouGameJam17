@@ -6,7 +6,7 @@ public class BarrierAbility : CombatAbility
     [SerializeField] private ProjectileBarrier barrierPrefab;
     [SerializeField, Min(0f)] private float distanceInFront = 1f;
 
-    public override bool Execute(CombatStats owner, CombatStats target)
+     public override bool Execute(CombatStats owner, CombatStats target, AttackKind kind)
     {
         if (barrierPrefab == null)
         {

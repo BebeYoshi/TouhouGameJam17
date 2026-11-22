@@ -16,7 +16,6 @@ public class CombatStats : MonoBehaviour
     private readonly List<StatusEffect> effects = new List<StatusEffect>();
     private float currentHealth;
     private float currentBooze;
-    private float boozeGainBonus;
     private float attackTimer;
     private float skillTimer;
     private float levelMultiplier = 1f;
@@ -24,6 +23,8 @@ public class CombatStats : MonoBehaviour
     private float boozeLossOnHurt;
     private float maxBooze;
     private bool ultLocked;
+    private bool hasBeenRevived;
+    private float deathTime;
     
 
     public CharacterData Data => data;
@@ -31,7 +32,7 @@ public class CombatStats : MonoBehaviour
     public float CurrentBooze => currentBooze;
     public float MaxBooze => maxBooze;
     public float BoozeFraction => data != null && maxBooze > 0f ? currentBooze / maxBooze : 0f;
-    public float BoozeGainMultiplier => Mathf.Max(0f, 1f + boozeGainBonus + GetPassiveBoozeGainBonus());
+    public float BoozeGainMultiplier => Mathf.Max(0f, 1f + GetPassiveBoozeGainBonus() + GetStackedSum(StatusEffectType.BoozeGainBuff));
     public int Level => level;
     public BattleSide Side => side;
     public bool IsInitialized => data != null;
@@ -42,6 +43,9 @@ public class CombatStats : MonoBehaviour
     public float HealReduction => GetStackedStrength(StatusEffectType.HealReduction, settings.MaxHealReduction);
 
     public bool IsAlive => currentHealth > 0f;
+    public bool CanBeRevived => data != null && !IsAlive && !hasBeenRevived;
+    public float DeathTime => deathTime;
+    public bool HasUltAvailable => data != null && data.HasUlt && !ultLocked;
     public bool IsUltReady => data != null && data.HasUlt && !ultLocked && currentBooze >= maxBooze;
     public bool IsStunned => HasEffect(StatusEffectType.Stun);
     public bool CanAct => IsAlive && !IsStunned;
@@ -56,6 +60,7 @@ public class CombatStats : MonoBehaviour
     public event Action<float, float> HealthChanged;
     public event Action<CombatStats> Died;
     public event Action Unleashed;
+    public event Action<CombatStats> Revived;
 
     private void Awake()
     {
@@ -105,10 +110,11 @@ public class CombatStats : MonoBehaviour
         currentHealth = MaxHealth;
         maxBooze = data.MaxBooze;
         currentBooze = 0f;
-        boozeGainBonus = 0f;
         attackTimer = 0f;
         skillTimer = 0f;
         ultLocked = false;
+        hasBeenRevived = false;
+        deathTime = 0f;
         boozeLossOnHurt = 0f;
         boozeLossOnHurtPercent = 0f;
         effects.Clear();
@@ -134,7 +140,8 @@ public class CombatStats : MonoBehaviour
 
     private float GetDamageBonus(CombatStats target)
     {
-        return Passive != null ? Passive.GetDamageBonus(this, target) : 0f;
+        float passiveBonus = Passive != null ? Passive.GetDamageBonus(this, target) : 0f;
+        return passiveBonus + GetStackedSum(StatusEffectType.DamageBuff);
     }
 
     private float GetPassiveBoozeGainBonus()
@@ -142,6 +149,21 @@ public class CombatStats : MonoBehaviour
         return Passive != null ? Passive.GetBoozeGainBonus(this) : 0f;
     }
 
+    private float GetStackedSum(StatusEffectType type)
+    {
+        float sum = 0f;
+
+        foreach (StatusEffect effect in effects)
+        {
+            if (effect.Type == type)
+            {
+                sum += effect.Multiplier;
+            }
+        }
+
+        return sum;
+    }
+    
     private float GetStackedStrength(StatusEffectType type, float cap)
     {
         float remaining = 1f;
@@ -225,6 +247,7 @@ public class CombatStats : MonoBehaviour
 
         if (!IsAlive)
         {
+            deathTime = Time.time;
             effects.Clear();
 
             if (Passive != null)
@@ -248,14 +271,14 @@ public class CombatStats : MonoBehaviour
 
         if (data.BasicAttackAbility != null)
         {
-            if(!data.BasicAttackAbility.Execute(this, target))
+            if (!data.BasicAttackAbility.Execute(this, target, AttackKind.Basic))
             {
                 return false;
             }
         }
         else
         {
-            PerformAttack(target, data.BasicMultiplier);
+            PerformAttack(target, data.BasicMultiplier, AttackKind.Basic);
         }
 
         attackTimer = 1f / data.AttackSpeed;
@@ -269,7 +292,7 @@ public class CombatStats : MonoBehaviour
             return false;
         }
 
-        if (!data.Skill.Execute(this, target))
+        if (!data.Skill.Execute(this, target, AttackKind.Skill))
         {
             return false;
         }
@@ -284,16 +307,23 @@ public class CombatStats : MonoBehaviour
             && Vector2.Distance(transform.position, target.transform.position) <= data.AttackRange;
     }
 
-    public bool PerformAttack(CombatStats target, float multiplier)
+    public bool PerformAttack(CombatStats target, float multiplier, AttackKind kind)
     {
         if (target == null || !target.IsAlive)
         {
             return false;
         }
 
-        if (!DealDamage(target, multiplier, true))
+        bool isUlt = kind == AttackKind.Ult;
+
+        if (!DealDamage(target, multiplier, !isUlt))
         {
             return false;
+        }
+
+        if (isUlt)
+        {
+            return true;
         }
 
         AddBooze(data.BoozeOnHit);
@@ -368,8 +398,30 @@ public class CombatStats : MonoBehaviour
             if (effect.IsExpired)
             {
                 effects.RemoveAt(i);
+
+                if (effect.Type == StatusEffectType.Revived)
+                {
+                    ApplyDamage(currentHealth);
+                    return;
+                }
             }
         }
+    }
+
+    public bool Revive(float healthFraction, float duration)
+    {
+        if (!CanBeRevived)
+        {
+            return false;
+        }
+
+        hasBeenRevived = true;
+        currentHealth = Mathf.Max(1f, Mathf.Round(MaxHealth * Mathf.Clamp01(healthFraction)));
+        effects.Add(StatusEffect.Revived(duration));
+
+        HealthChanged?.Invoke(currentHealth, MaxHealth);
+        Revived?.Invoke(this);
+        return true;
     }
 
     private void ApplyTick(StatusEffect effect)
@@ -393,17 +445,17 @@ public class CombatStats : MonoBehaviour
 
     public bool UseUlt(CombatStats target)
     {
-        if (!CanAct || !CanHit(target))
+        if (!CanAct || !IsUltReady || data.UltAbility == null)
         {
             return false;
         }
 
-        if (!TryUseUlt())
+        if (!data.UltAbility.Execute(this, target, AttackKind.Ult))
         {
             return false;
         }
 
-        DealDamage(target, data.UltMultiplier, false);
+        TryUseUlt();
         return true;
     }
 
@@ -465,16 +517,6 @@ public class CombatStats : MonoBehaviour
     private void RewardKill()
     {
         AddBooze(data.BoozeOnKill);
-    }
-
-    public void AddBoozeGainBonus(float bonus)
-    {
-        boozeGainBonus += bonus;
-    }
-
-    public void RemoveBoozeGainBonus(float bonus)
-    {
-        boozeGainBonus -= bonus;
     }
 
     private bool TryUseUlt()

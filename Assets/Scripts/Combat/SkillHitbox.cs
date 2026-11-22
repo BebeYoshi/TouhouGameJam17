@@ -14,6 +14,7 @@ public class SkillHitbox : MonoBehaviour
     private HitboxTargets targets;
     private float damageMultiplier;
     private EffectSpec effect;
+    private AttackKind attackKind;
     private bool consumed;
     private Rigidbody2D body;
     private Collider2D hitboxCollider;
@@ -31,12 +32,13 @@ public class SkillHitbox : MonoBehaviour
         hitboxCollider = GetComponent<Collider2D>();
     }
 
-    public void Setup(CombatStats newOwner, HitboxTargets newTargets, float newDamageMultiplier, EffectSpec newEffect)
+    public void Setup(CombatStats newOwner, HitboxTargets newTargets, float newDamageMultiplier, EffectSpec newEffect, AttackKind kind)
     {
         owner = newOwner;
         targets = newTargets;
         damageMultiplier = newDamageMultiplier;
         effect = newEffect;
+        attackKind = kind;
         direction = transform.right;
         expireTime = Time.time + lifetime;
 
@@ -46,14 +48,20 @@ public class SkillHitbox : MonoBehaviour
         }
     }
 
-    public void HomeOn(CombatStats target, float delay)
+    public void HomeOn(CombatStats target, float delay, Vector2 outwardVelocity)
     {
         homingTarget = target;
         isHoming = true;
         launchTime = Time.time + delay;
         expireTime = launchTime + lifetime;
         hitboxCollider.enabled = delay <= 0f;
-        body.linearVelocity = Vector2.zero;
+        body.linearVelocity = outwardVelocity;
+
+        if (outwardVelocity.sqrMagnitude > 0.0001f)
+        {
+            direction = outwardVelocity.normalized;
+            body.rotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        }
     }
 
     private void FixedUpdate()
@@ -109,7 +117,7 @@ public class SkillHitbox : MonoBehaviour
         alreadyHit.Add(unit);
 
         bool dealsDamage = isEnemy && damageMultiplier > 0f;
-        bool hit = !dealsDamage || owner.PerformAttack(unit, damageMultiplier);
+         bool hit = !dealsDamage || owner.PerformAttack(unit, damageMultiplier, attackKind);
 
         if (destroyOnFirstHit)
         {
