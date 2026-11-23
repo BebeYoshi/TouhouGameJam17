@@ -75,6 +75,13 @@ public class StageSetup : MonoBehaviour
             slot.gameObject.AddComponent<CombatAnimator>();
         }
 
+        DamageFlash flash = slot.GetComponent<DamageFlash>();
+        if (flash == null)
+        {
+            flash = slot.gameObject.AddComponent<DamageFlash>();
+        }
+        flash.RefreshRenderers();
+
         SpriteRenderer placeholder = slot.GetComponent<SpriteRenderer>();
 
         if (placeholder != null)
