@@ -8,7 +8,7 @@ public class Player_info : ScriptableObject
     private const string SaveKey = "player_save";
 
     private PlayerSave data;
-    [SerializeField] private int debugPower;
+    [SerializeField] CharacterDatabase charact;
     [SerializeField] private int debugPoint;
 
     public event Action CurrencyChanged;
@@ -26,15 +26,14 @@ public class Player_info : ScriptableObject
         }
     }
 
-    private void UpdateDebugValues()
-{
-    debugPower = Data.power;
-    debugPoint = Data.point;
-}
 
     public int ClearedStagesCount => Data.clearedStages.Count;
     public int Power => Data.power;
     public int Point => Data.point;
+
+    public void HabilitaCharBanner(string id){
+        charact.EnablePullable(id);
+    }
 
     public void AddPower(int amount)
     {
@@ -46,6 +45,19 @@ public class Player_info : ScriptableObject
         Data.power += amount;
         CurrencyChanged?.Invoke();
     }
+
+    public void ResetProgress()
+{
+    Data.power = 0;
+    Data.point = 0;
+    Data.clearedStages.Clear();
+
+    Save();
+
+    CurrencyChanged?.Invoke();
+
+    Debug.Log("Player progress reset!");
+}
 
     public void AddPoint(int amount)
     {
@@ -105,8 +117,12 @@ public class Player_info : ScriptableObject
     {
         string json = PlayerPrefs.GetString(SaveKey, "");
         data = string.IsNullOrEmpty(json) ? new PlayerSave() : JsonUtility.FromJson<PlayerSave>(json);
-        UpdateDebugValues();
 
+    }
+    [ContextMenu("Reset Player Progress")]
+    private void ResetPlayerProgress()
+    {
+    ResetProgress();
     }
 
     [ContextMenu("Reset Save")]

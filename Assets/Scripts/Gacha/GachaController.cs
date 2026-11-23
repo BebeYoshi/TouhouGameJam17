@@ -29,6 +29,8 @@ public class GachaController : MonoBehaviour
         [SerializeField] private TextMeshProUGUI points;
         [SerializeField] private TextMeshProUGUI power;
 
+        private bool isRolling;
+
 
 
         [SerializeField] public string[] lines;
@@ -64,33 +66,51 @@ public class GachaController : MonoBehaviour
     }
     }
     
-    public void retornaUmResultado()
+   public void retornaUmResultado()
+{
+    if (isRolling)
+        return;
+
+    if (!playerInfo.SpendPoint(100))
     {
-        if(playerInfo.SpendPoint(100)){
-        power.SetText(playerInfo.Power.ToString());
-        points.SetText(playerInfo.Point.ToString());
-            runtimeBanner = Instantiate(banner1);
-            StartCoroutine(ShowResults(1));
-        }
+        Debug.Log("Not enough Points for a pull!");
+        return;
     }
 
-    public void retornaCincoResultados()
+    isRolling = true;
+
+    power.SetText(playerInfo.Power.ToString());
+    points.SetText(playerInfo.Point.ToString());
+
+    runtimeBanner = Instantiate(banner1);
+    StartCoroutine(ShowResults(1));
+}
+
+public void retornaCincoResultados()
+{
+    if (isRolling)
+        return;
+
+    if (!playerInfo.SpendPoint(500))
     {
-        foreach(Image img in imagens){
-            img.enabled = false;
-        }
-
-        foreach(GameObject img in newMulti){
-            img.SetActive(false);
-        }
-        if(playerInfo.SpendPoint(500)){
-        power.SetText(playerInfo.Power.ToString());
-        points.SetText(playerInfo.Point.ToString());
-            runtimeBanner = Instantiate(banner1);
-            StartCoroutine(ShowResults(5));
-        }
-
+        Debug.Log("Not enough Points for five pulls!");
+        return;
     }
+
+    isRolling = true;
+
+    foreach (Image img in imagens)
+        img.enabled = false;
+
+    foreach (GameObject img in newMulti)
+        img.SetActive(false);
+
+    power.SetText(playerInfo.Power.ToString());
+    points.SetText(playerInfo.Point.ToString());
+
+    runtimeBanner = Instantiate(banner1);
+    StartCoroutine(ShowResults(5));
+}
 
     IEnumerator ShowResults(int quantidade)
     {
@@ -134,6 +154,7 @@ public class GachaController : MonoBehaviour
 
         Destroy(runtimeBanner);
         runtimeBanner = null;
+        isRolling = false;
     }
     
 }

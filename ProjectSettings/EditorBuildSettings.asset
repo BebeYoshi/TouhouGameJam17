@@ -45,6 +45,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Fases/Boss 3-6.unity
     guid: 553b3739ba230e1479c00de97acf1696
   - enabled: 1
+    path: Assets/Scenes/Fases/Boss 1-9.unity
+    guid: 2c71c367ee3bbbc4d97fd1252e679512
+  - enabled: 1
     path: Assets/Scenes/Fases/Boss 3-9.unity
     guid: b2bc2b3cc68a748489b1d72b77ede409
   - enabled: 1

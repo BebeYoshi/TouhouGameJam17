@@ -14,10 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PartyLoadout
   members:
   - characterId: suika
-    level: 28
-  - characterId: fairy
-    level: 1
-  - characterId: dolls
-    level: 1
-  - characterId: spirit
     level: 1

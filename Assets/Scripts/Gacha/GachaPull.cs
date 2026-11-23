@@ -62,7 +62,7 @@ public class GachaPull : ScriptableObject
         else
         {
             playerInfo.AddPoint(50);
-            playerInfo.AddPower(100);
+            playerInfo.AddPower(30);
 
             repetido = true;
         }

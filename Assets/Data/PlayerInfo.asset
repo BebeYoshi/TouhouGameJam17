@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d352ad4abd42c5d4cbe0527c63948eb0, type: 3}
   m_Name: PlayerInfo
   m_EditorClassIdentifier: Assembly-CSharp::Player_info
+  charact: {fileID: 11400000, guid: f1d1151792c756f44b29ef76357dcab9, type: 2}
+  debugPoint: 0

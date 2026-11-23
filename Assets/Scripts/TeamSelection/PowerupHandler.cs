@@ -80,8 +80,7 @@ public class PowerupHandler : MonoBehaviour
         if (selectedCharacter.Level >= 40)
             return;
 
-        int cost = Mathf.RoundToInt(50 * Mathf.Pow(1.1f, selectedCharacter.Level));
-
+       int cost = Mathf.RoundToInt(20 * Mathf.Pow(1.04f, selectedCharacter.Level));
         if (!playerInfo.SpendPower(cost))
         {
             Debug.Log("Power insuficiente!");

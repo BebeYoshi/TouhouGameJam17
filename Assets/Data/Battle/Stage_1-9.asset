@@ -16,12 +16,12 @@ MonoBehaviour:
   isBoss: 1
   enemies:
   - characterId: reimu
-    level: 20
+    level: 16
   - characterId: spirit
     level: 18
   - characterId: dolls
     level: 18
-  powerReward: 150
+  powerReward: 175
   pointReward: 150
-  rerunPowerReward: 50
-  rerunPointReward: 25
+  rerunPowerReward: 85
+  rerunPointReward: 100

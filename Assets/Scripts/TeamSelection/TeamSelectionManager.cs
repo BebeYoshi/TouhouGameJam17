@@ -125,6 +125,18 @@ public class TeamSelectionManager : MonoBehaviour
         }
 
         selectionCounter.text = SelectedCharacters.Count + " /3";
+        if (inspectedCharacter != null)
+    {
+        var personagemSelecionado = fullRoster.GetMember(inspectedCharacter.id);
+
+        if (personagemSelecionado != null)
+        {
+            int cost = Mathf.RoundToInt(20 * Mathf.Pow(1.04f, personagemSelecionado.Level));
+
+
+            custoTXT.text = cost.ToString();
+        }
+    }
 
         confirmButton.interactable =
             selectedCharacters.Count >= 1;
@@ -159,8 +171,7 @@ public class TeamSelectionManager : MonoBehaviour
         if (inspectedCharacter == null)
             return;
         var personagemSelecionado = fullRoster.GetMember(inspectedCharacter.id);
-        int cost = Mathf.RoundToInt(50 * Mathf.Pow(1.1f, personagemSelecionado.Level));
-        custoTXT.text = cost.ToString();
+        int cost = Mathf.RoundToInt(20 * Mathf.Pow(1.04f, personagemSelecionado.Level));
         var currency = playerInfo.Power;
 
     if(currency < cost){

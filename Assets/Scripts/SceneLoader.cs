@@ -15,6 +15,9 @@ public class SceneLoader : MonoBehaviour
         
     }
     public void CarregaCena(string nome){
+        RewardUIManager.Instance?.ClearReward();
+        RewardUIManager.Instance?.ClearNotification();
+
         SceneManager.LoadScene(nome);
     }
 

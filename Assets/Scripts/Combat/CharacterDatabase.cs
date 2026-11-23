@@ -34,6 +34,19 @@ public class CharacterDatabase : ScriptableObject
         return null;
     }
 
+    public void EnablePullable(string id)
+    {
+    CharacterData character = characters.Find(c => c.Id == id);
+
+    if (character == null)
+    {
+        Debug.LogWarning($"Character {id} não encontrado!");
+        return;
+    }
+
+    character.isPullable = true;
+    }
+
     public List<CharacterData> ReturnAll()
     {   
         return characters;

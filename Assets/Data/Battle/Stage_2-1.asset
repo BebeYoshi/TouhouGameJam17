@@ -21,7 +21,7 @@ MonoBehaviour:
     level: 21
   - characterId: fairy
     level: 21
-  powerReward: 200
-  pointReward: 100
-  rerunPowerReward: 100
-  rerunPointReward: 25
+  powerReward: 175
+  pointReward: 200
+  rerunPowerReward: 85
+  rerunPointReward: 90

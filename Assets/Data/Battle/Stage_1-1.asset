@@ -17,7 +17,7 @@ MonoBehaviour:
   enemies:
   - characterId: fairy
     level: 1
-  powerReward: 100
-  pointReward: 100
-  rerunPowerReward: 50
-  rerunPointReward: 25
+  powerReward: 125
+  pointReward: 300
+  rerunPowerReward: 65
+  rerunPointReward: 75

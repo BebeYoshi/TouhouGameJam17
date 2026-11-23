@@ -15,7 +15,3 @@ MonoBehaviour:
   members:
   - characterId: suika
     level: 1
-  - characterId: fairy
-    level: 1
-  - characterId: dolls
-    level: 1
