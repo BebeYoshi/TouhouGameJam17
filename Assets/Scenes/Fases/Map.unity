@@ -2218,6 +2218,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409276146}
   m_CullTransparentMesh: 1
+--- !u!1 &433990565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 433990567}
+  - component: {fileID: 433990566}
+  m_Layer: 0
+  m_Name: ScriptTentativa
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &433990566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433990565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 210e624bec785aa4da11661987f35398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TentarFuncionar
+  fullRoster: {fileID: 11400000, guid: 50d9eb7ce68954b459a8801bda18e87d, type: 2}
+  partyLoadout: {fileID: 11400000, guid: d4cadc5f28e55b84d9b43f6e060011f1, type: 2}
+  playerInfo: {fileID: 11400000, guid: 7db77273890849743a5fa64cf91f290a, type: 2}
+  gachaPull: {fileID: 11400000, guid: 8e73f12f382477a4b9a4fec2a2ac32c1, type: 2}
+--- !u!4 &433990567
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433990565}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 316.40878, y: 251.87288, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &444739670
 GameObject:
   m_ObjectHideFlags: 0
@@ -9703,3 +9751,4 @@ SceneRoots:
   - {fileID: 107901464}
   - {fileID: 33130541}
   - {fileID: 680565122}
+  - {fileID: 433990567}
