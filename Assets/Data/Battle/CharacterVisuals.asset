@@ -27,3 +27,19 @@ MonoBehaviour:
     prefab: {fileID: 5826590101277512833, guid: d40ca06aa099cfd439a5aedffcb168af, type: 3}
   - characterId: reimu
     prefab: {fileID: 2096055975333824740, guid: e43aaa0a6addcc246812a8b9196f180e, type: 3}
+  - characterId: yuyuko
+    prefab: {fileID: 8978140811935480465, guid: cb2e561740d521447a8a289fea0badf2, type: 3}
+  - characterId: fairy
+    prefab: {fileID: 3524076701576687511, guid: f790350a606371948a138f60c19e9ed7, type: 3}
+  - characterId: yuugi
+    prefab: {fileID: 475774847744624174, guid: 1e02f79b7a85a364e844be910a3e6a44, type: 3}
+  - characterId: kasen
+    prefab: {fileID: 1800710454218172130, guid: 932f9a853bd8aac4cb7744f8c2834549, type: 3}
+  - characterId: yuugi_boss
+    prefab: {fileID: 475774847744624174, guid: 1e02f79b7a85a364e844be910a3e6a44, type: 3}
+  - characterId: reimu_boss
+    prefab: {fileID: 2096055975333824740, guid: e43aaa0a6addcc246812a8b9196f180e, type: 3}
+  - characterId: dolls
+    prefab: {fileID: 6381938718998393873, guid: d9de075f6aa4cf047936aff2a4a793dd, type: 3}
+  - characterId: spirit
+    prefab: {fileID: 2006173083074905887, guid: 9047268346a9cf4488cc1a9c52d3dfe5, type: 3}

@@ -11,6 +11,7 @@ public class StageSetup : MonoBehaviour
     [SerializeField] private StageEncounter encounter;
     [SerializeField] private List<CombatStats> allySlots = new List<CombatStats>();
     [SerializeField] private List<CombatStats> enemySlots = new List<CombatStats>();
+    private static Vector3 VisualOffset = new Vector3(0.61f, 0.252f, 0f);
 
     private void Awake()
     {
@@ -57,7 +58,7 @@ public class StageSetup : MonoBehaviour
         }
 
         GameObject visual = Instantiate(prefab, slot.transform);
-        visual.transform.localPosition = Vector3.zero;
+        visual.transform.localPosition = VisualOffset;
 
         foreach (Rigidbody2D body in visual.GetComponentsInChildren<Rigidbody2D>())
         {

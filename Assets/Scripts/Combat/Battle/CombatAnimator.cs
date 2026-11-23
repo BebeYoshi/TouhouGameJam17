@@ -1,26 +1,28 @@
 using UnityEngine;
-using System;
 
 public class CombatAnimator : MonoBehaviour
 {
-    private const string IdleState = "idle";
-    private const string WalkState = "walk";
-    private const string MeleeState = "attackMelee";
-    private const string RangedState = "attackRanged"; 
-    private const string SkillState = "skill";
-    private const string UltState = "ult";
+    private static readonly int IdleHash = Animator.StringToHash("idle");
+    private static readonly int WalkHash = Animator.StringToHash("walk");
+    private static readonly int MeleeHash = Animator.StringToHash("attackMelee");
+    private static readonly int RangedHash = Animator.StringToHash("attackRanged");
+    private static readonly int SkillHash = Animator.StringToHash("skill");
+    private static readonly int UltHash = Animator.StringToHash("ult");
 
-    [SerializeField, Min(0f)] private float attackLockTime = 0.35f;
-    [SerializeField, Min(0f)] private float skillLockTime = 0.6f;
-    [SerializeField, Min(0f)] private float ultLockTime = 0.9f;
+    private float baseOffsetX;
+
+    [SerializeField, Min(0f)] private float transitionDuration = 0.08f;
     [SerializeField, Min(0f)] private float walkThreshold = 0.05f;
 
     private CombatStats stats;
     private Animator animator;
     private Rigidbody2D body;
     private Transform visual;
-    private string currentState;
-    private float lockedUntil;
+
+    private int currentStateHash;
+    private int lockedStateHash;
+    private bool actionEnteredState;
+    private bool isUltLocked;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class CombatAnimator : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         body = GetComponent<Rigidbody2D>();
         visual = animator != null ? animator.transform : null;
+        baseOffsetX = visual != null ? visual.localPosition.x : 0f;
     }
 
     private void OnEnable()
@@ -50,7 +53,12 @@ public class CombatAnimator : MonoBehaviour
 
     private void Update()
     {
-        if (animator == null || !stats.IsAlive || Time.time < lockedUntil)
+        if (animator == null || !stats.IsAlive)
+        {
+            return;
+        }
+
+        if (IsActionLocked())
         {
             return;
         }
@@ -63,30 +71,109 @@ public class CombatAnimator : MonoBehaviour
             Face(velocity.x);
         }
 
-        Play(isWalking ? WalkState : IdleState, 0f);
+        Play(isWalking ? WalkHash : IdleHash, restartIfSame: false);
     }
 
     private void OnAttackPerformed(CombatStats target)
     {
+        if (IsActionLocked())
+        {
+            return;
+        }
+
         FaceTarget(target);
         bool ranged = stats.Data.AttackType == AttackType.Ranged;
-        Play(ranged && HasState(RangedState) ? RangedState : MeleeState, attackLockTime);
+        int targetHash = (ranged && HasState(RangedHash)) ? RangedHash : MeleeHash;
+        StartLockedAction(targetHash, isUlt: false);
     }
 
     private void OnSkillUsed(CombatStats target)
     {
+        if (IsActionLocked())
+        {
+            return;
+        }
+
         FaceTarget(target);
-        Play(SkillState, skillLockTime);
+        StartLockedAction(SkillHash, isUlt: false);
     }
 
     private void OnUltUsed(CombatStats target)
     {
         FaceTarget(target);
-        Play(UltState, ultLockTime);
+        StartLockedAction(UltHash, isUlt: true);
+    }
+
+    private void StartLockedAction(int stateHash, bool isUlt)
+    {
+        if (!HasState(stateHash))
+        {
+            return;
+        }
+
+        lockedStateHash = stateHash;
+        actionEnteredState = false;
+        isUltLocked = isUlt;
+        Play(stateHash, restartIfSame: true);
+    }
+
+    private bool IsActionLocked()
+    {
+        if (lockedStateHash == 0)
+        {
+            return false;
+        }
+
+        AnimatorStateInfo currentInfo = animator.GetCurrentAnimatorStateInfo(0);
+        bool inTransitionToLocked = animator.IsInTransition(0) &&
+                                    animator.GetNextAnimatorStateInfo(0).shortNameHash == lockedStateHash;
+        bool isInLockedState = currentInfo.shortNameHash == lockedStateHash;
+
+        if (!actionEnteredState)
+        {
+            if (inTransitionToLocked || isInLockedState)
+            {
+                actionEnteredState = true;
+            }
+            return true;
+        }
+
+        if (inTransitionToLocked)
+        {
+            return true;
+        }
+
+        if (isInLockedState && currentInfo.normalizedTime < 1f)
+        {
+            return true;
+        }
+
+        lockedStateHash = 0;
+        actionEnteredState = false;
+        isUltLocked = false;
+        return false;
+    }
+
+    private void Play(int stateHash, bool restartIfSame)
+    {
+        if (animator == null || !HasState(stateHash))
+        {
+            return;
+        }
+
+        if (!restartIfSame && currentStateHash == stateHash)
+        {
+            return;
+        }
+
+        float blend = (stateHash == UltHash) ? 0f : transitionDuration;
+        animator.CrossFadeInFixedTime(stateHash, blend, 0, 0f);
+        currentStateHash = stateHash;
     }
 
     private void OnDied(CombatStats unit)
     {
+        ResetLocks();
         if (visual != null)
         {
             visual.gameObject.SetActive(false);
@@ -99,8 +186,16 @@ public class CombatAnimator : MonoBehaviour
         {
             visual.gameObject.SetActive(true);
             animator = visual.GetComponent<Animator>();
-            currentState = null;
+            ResetLocks();
         }
+    }
+
+    private void ResetLocks()
+    {
+        lockedStateHash = 0;
+        currentStateHash = 0;
+        actionEnteredState = false;
+        isUltLocked = false;
     }
 
     private void FaceTarget(CombatStats target)
@@ -118,31 +213,19 @@ public class CombatAnimator : MonoBehaviour
             return;
         }
 
+        float sign = Mathf.Sign(directionX);
+
         Vector3 scale = visual.localScale;
         scale.x = Mathf.Abs(scale.x) * Mathf.Sign(directionX);
         visual.localScale = scale;
+
+        Vector3 pos = visual.localPosition;
+        pos.x = baseOffsetX * -sign;
+        visual.localPosition = pos;
     }
 
-    private void Play(string state, float lockTime)
+    private bool HasState(int stateHash)
     {
-        if (animator == null || !HasState(state))
-        {
-            return;
-        }
-
-        lockedUntil = Time.time + lockTime;
-
-        if (lockTime <= 0f && currentState == state)
-        {
-            return;
-        }
-
-        animator.Play(state, 0, 0f);
-        currentState = state;
-    }
-
-    private bool HasState(string state)
-    {
-        return animator != null && animator.HasState(0, Animator.StringToHash(state));
+        return animator != null && animator.HasState(0, stateHash);
     }
 }

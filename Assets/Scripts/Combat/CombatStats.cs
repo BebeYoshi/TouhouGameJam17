@@ -58,6 +58,7 @@ public class CombatStats : MonoBehaviour
     public event Action<float, float> BoozeChanged;
     public event Action UltReady;
     public event Action<float, float> HealthChanged;
+    public event Action<float> Damaged;
     public event Action<CombatStats> Died;
     public event Action Unleashed;
     public event Action<CombatStats> Revived;
@@ -252,6 +253,7 @@ public class CombatStats : MonoBehaviour
         if (currentHealth != previousHealth)
         {
             HealthChanged?.Invoke(currentHealth, MaxHealth);
+            Damaged?.Invoke(roundedDamage);
         }
 
         if (!IsAlive)
