@@ -12,6 +12,8 @@ public class StageSetup : MonoBehaviour
     [SerializeField] private List<CombatStats> allySlots = new List<CombatStats>();
     [SerializeField] private List<CombatStats> enemySlots = new List<CombatStats>();
     private static Vector3 VisualOffset = new Vector3(0.61f, 0.252f, 0f);
+    public IReadOnlyList<CombatStats> AllySlots => allySlots;
+
 
     public StageEncounter Encounter => encounter;
 

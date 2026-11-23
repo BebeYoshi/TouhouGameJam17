@@ -24,7 +24,7 @@ public partial class SelfUltsAction : Action
     protected override Status OnUpdate()
     {
         bool teste = combat.UseUlt(combatEnemy);
-        Debug.Log("DISPAROU ULT");
+        Debug.Log("DISPAROU ULT" + teste);
         return Status.Success;
     }
 
