@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6531ca5174c4743b3a5c3ef742eb42, type: 3}
+  m_Name: CharacterVisuals
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterVisuals
+  entries:
+  - characterId: 
+    prefab: {fileID: 0}
+  - characterId: suika
+    prefab: {fileID: 2560555269649844755, guid: 6d8b95a8c2c5f30439e1680f2de68d4c, type: 3}
+  - characterId: miyoi
+    prefab: {fileID: 6489895840269232787, guid: 137f5f5469e597f4590b95486176f1a5, type: 3}
+  - characterId: momiji
+    prefab: {fileID: 7901480367386321420, guid: 0d0d6ef1703bd504d9eec46042f438b8, type: 3}
+  - characterId: aya
+    prefab: {fileID: 8101403115217501816, guid: 74d0db1638b836b47a7e168dbcf8064c, type: 3}
+  - characterId: mamizou
+    prefab: {fileID: 5826590101277512833, guid: d40ca06aa099cfd439a5aedffcb168af, type: 3}
+  - characterId: reimu
+    prefab: {fileID: 2096055975333824740, guid: e43aaa0a6addcc246812a8b9196f180e, type: 3}

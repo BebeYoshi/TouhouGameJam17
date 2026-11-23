@@ -13,17 +13,20 @@ public partial class EstaNoRangeCondition : Condition
 
     public override bool IsTrue()
     {
-        // Range.Value = 1.5f;
-        rb = GameObject.GetComponent<Rigidbody2D>();
-        Vector2 posicaoDesejada = Inimigo.Value.transform.position;
-        float distancia = Vector2.Distance(rb.position, posicaoDesejada);
-        if(distancia <= 1.5f){
-           return true;
-
-        }
-        else{
+        if (Inimigo.Value == null)
+        {
             return false;
         }
+
+        CombatStats self = GameObject.GetComponent<CombatStats>();
+
+        if (self != null && self.IsInitialized)
+        {
+            return self.IsInRange(Inimigo.Value.GetComponent<CombatStats>());
+        }
+
+        rb = GameObject.GetComponent<Rigidbody2D>();
+        return Vector2.Distance(rb.position, Inimigo.Value.transform.position) <= 1.5f;
     }
 
     

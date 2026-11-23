@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d850a1ca56fcd4447a169b1ae0692dd6, type: 3}
+  m_Name: Momiji_Skill_Shield
+  m_EditorClassIdentifier: Assembly-CSharp::BarrierAbility
+  barrierPrefab: {fileID: 5034829951874815566, guid: 177e302787316604eb09106a934d51c0, type: 3}
+  distanceInFront: 1

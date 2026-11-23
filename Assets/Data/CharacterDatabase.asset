@@ -13,27 +13,395 @@ MonoBehaviour:
   m_Name: CharacterDatabase
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDatabase
   characters:
-  - id: 323
-    displayName: Teste
+  - id: suika
+    displayName: Suika Ibuki
     species: 0
     sprite: {fileID: 0}
     isPullable: 0
     pullChance: 0
     role: 0
     attackType: 0
-    attackSpeed: 0
-    attackRange: 0
-    moveSpeed: 0
-    skillCooldown: 0
-    maxHealth: 0
-    attack: 0
-    defense: 0
-    maxBooze: 0
-    boozePerSecond: 0
-    boozeOnHit: 0
-    boozeOnHurt: 0
-    boozeOnKill: 0
-    basicMultiplier: 0
+    attackSpeed: 0.85
+    attackRange: 1.3
+    moveSpeed: 2.8
+    skillCooldown: 9
+    maxHealth: 880
+    attack: 35
+    defense: 48
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 3.5
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 0}
+    passive: {fileID: 11400000, guid: 78e5b24c6adaf6f4ea826615b65a5bc3, type: 2}
+    skill: {fileID: 11400000, guid: d56354bbf31945f40acc8fb45ca20094, type: 2}
+    ultAbility: {fileID: 11400000, guid: f2ff9f6ff4aad82468b3033ea237ca5a, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 1.2
+    ultMultiplier: 2.8
+    hasUlt: 1
+  - id: spirit
+    displayName: Spirit
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 2
+    attackType: 1
+    attackSpeed: 1.05
+    attackRange: 5
+    moveSpeed: 2.8
+    skillCooldown: 8
+    maxHealth: 420
+    attack: 64
+    defense: 18
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 5
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 11400000, guid: 7d9f3c8f1f272ed45bbd4b398c594d99, type: 2}
+    passive: {fileID: 11400000, guid: e216df10dd614c045a090fec57a57281, type: 2}
+    skill: {fileID: 11400000, guid: 01db867c827b4328a9a8e4391885853b, type: 2}
+    ultAbility: {fileID: 0}
+    basicMultiplier: 1
+    skillMultiplier: 1.65
+    ultMultiplier: 0
+    hasUlt: 0
+  - id: fairy
+    displayName: Fairy
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 2
+    attackType: 1
+    attackSpeed: 1
+    attackRange: 5
+    moveSpeed: 2.5
+    skillCooldown: 8
+    maxHealth: 400
+    attack: 62
+    defense: 18
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 5
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 11400000, guid: 7d9f3c8f1f272ed45bbd4b398c594d99, type: 2}
+    passive: {fileID: 11400000, guid: 146ee6af29c73af409079b77ed3c5aa2, type: 2}
+    skill: {fileID: 11400000, guid: 4190cd4d31783c048a7bbcdf479f1f96, type: 2}
+    ultAbility: {fileID: 0}
+    basicMultiplier: 1
+    skillMultiplier: 1.5
+    ultMultiplier: 0
+    hasUlt: 0
+  - id: dolls
+    displayName: Shanghai & Hourai Dolls
+    species: 1
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 0
+    attackType: 0
+    attackSpeed: 0.9
+    attackRange: 1.2
+    moveSpeed: 2.4
+    skillCooldown: 9
+    maxHealth: 820
+    attack: 30
+    defense: 42
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 5
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 0}
+    passive: {fileID: 11400000, guid: 33e932fde8fd2d644a83f0532aeadce5, type: 2}
+    skill: {fileID: 11400000, guid: fefc2584cb18dc442b1f63a29054cd92, type: 2}
+    ultAbility: {fileID: 0}
+    basicMultiplier: 1
+    skillMultiplier: 1.5
+    ultMultiplier: 0
+    hasUlt: 0
+  - id: miyoi
+    displayName: Miyoi Okunoda
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 1
+    attackType: 0
+    attackSpeed: 0.95
+    attackRange: 1.4
+    moveSpeed: 2.6
+    skillCooldown: 10
+    maxHealth: 460
+    attack: 66
+    defense: 20
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 4
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 0}
+    passive: {fileID: 11400000, guid: 394ea3831d98e994da6b36d1afb09c8b, type: 2}
+    skill: {fileID: 11400000, guid: 2608223059f381a47be746063fa4aab8, type: 2}
+    ultAbility: {fileID: 11400000, guid: e6440ad7f8fecca47ad29e728c0d4931, type: 2}
+    basicMultiplier: 1
     skillMultiplier: 0
+    ultMultiplier: 0
+    hasUlt: 1
+  - id: mamizou
+    displayName: Mamizou Futatsuiwa
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 1
+    attackType: 1
+    attackSpeed: 0.95
+    attackRange: 5
+    moveSpeed: 2.4
+    skillCooldown: 9
+    maxHealth: 580
+    attack: 64
+    defense: 28
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 4
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 11400000, guid: 7d9f3c8f1f272ed45bbd4b398c594d99, type: 2}
+    passive: {fileID: 11400000, guid: 1b1b208f6c854814f8ea84e7094c841c, type: 2}
+    skill: {fileID: 11400000, guid: 7eaefcd8492f68148b3a8c8a12078e7f, type: 2}
+    ultAbility: {fileID: 11400000, guid: 63f7e197b10879f4792dad6021ddae8c, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 0.5
+    ultMultiplier: 1.5
+    hasUlt: 1
+  - id: reimu
+    displayName: Reimu Hakurei
+    species: 2
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 2
+    attackType: 1
+    attackSpeed: 0.95
+    attackRange: 5.5
+    moveSpeed: 2.8
+    skillCooldown: 10
+    maxHealth: 620
+    attack: 78
+    defense: 24
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 4
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 11400000, guid: 7d9f3c8f1f272ed45bbd4b398c594d99, type: 2}
+    passive: {fileID: 11400000, guid: 01cebc55e4207d14ba4308e1dc151480, type: 2}
+    skill: {fileID: 11400000, guid: ffa471ff4fa83d847a581c4546b3d374, type: 2}
+    ultAbility: {fileID: 11400000, guid: 4bf349d02d146bf4797456fce0c2d0d9, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 1.2
+    ultMultiplier: 4.5
+    hasUlt: 1
+  - id: aya
+    displayName: Aya Shameimaru
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 2
+    attackType: 1
+    attackSpeed: 1.1
+    attackRange: 5
+    moveSpeed: 3.6
+    skillCooldown: 8
+    maxHealth: 800
+    attack: 60
+    defense: 38
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 3.5
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 11400000, guid: 7d9f3c8f1f272ed45bbd4b398c594d99, type: 2}
+    passive: {fileID: 11400000, guid: a19c2cfe75008a54f9c9e04bcd47a33a, type: 2}
+    skill: {fileID: 11400000, guid: 24edcf8f8341d97428ac636101e1f7f4, type: 2}
+    ultAbility: {fileID: 11400000, guid: d612d8e5b7ae61048b7c85fabab4e553, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 1.2
+    ultMultiplier: 2.6
+    hasUlt: 1
+  - id: momiji
+    displayName: Momiji Inubashiri
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 0
+    attackType: 0
+    attackSpeed: 0.9
+    attackRange: 1.3
+    moveSpeed: 3
+    skillCooldown: 9
+    maxHealth: 860
+    attack: 34
+    defense: 50
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 3.5
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 0}
+    passive: {fileID: 11400000, guid: 57ff6971092e26f4aaccd5524adf6330, type: 2}
+    skill: {fileID: 11400000, guid: 9f47950b293b8c840b2f4e12368e7806, type: 2}
+    ultAbility: {fileID: 11400000, guid: 5e6c3c790d30c0847ac75296083416e9, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 0
+    ultMultiplier: 2
+    hasUlt: 1
+  - id: kasen
+    displayName: Kasen Ibaraki
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 2
+    attackType: 0
+    attackSpeed: 1.05
+    attackRange: 1.3
+    moveSpeed: 3.2
+    skillCooldown: 8
+    maxHealth: 520
+    attack: 72
+    defense: 24
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 5
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 0}
+    passive: {fileID: 11400000, guid: e71dcf02e4e2bbb46b49aa94ab3ab5b0, type: 2}
+    skill: {fileID: 11400000, guid: 21838f756fbc48041b9e1a48011cb5cb, type: 2}
+    ultAbility: {fileID: 11400000, guid: e0f9dc2ca0f753947b78ffd6f52a09ab, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 1.5
+    ultMultiplier: 1.5
+    hasUlt: 1
+  - id: yuugi
+    displayName: Yuugi Hoshiguma
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 0
+    attackType: 0
+    attackSpeed: 0.85
+    attackRange: 1.4
+    moveSpeed: 2.5
+    skillCooldown: 9
+    maxHealth: 1000
+    attack: 44
+    defense: 54
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 3.5
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 0}
+    passive: {fileID: 11400000, guid: 862be33e30aa92f47a5c88d916168c29, type: 2}
+    skill: {fileID: 11400000, guid: c8f43a1aa6069ef438260405a9793fc2, type: 2}
+    ultAbility: {fileID: 11400000, guid: 7544f62b5c046ee45804aed7a2ba4603, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 1.4
+    ultMultiplier: 0
+    hasUlt: 1
+  - id: yuyuko
+    displayName: Yuyuko Saigyouji
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 1
+    attackType: 1
+    attackSpeed: 0.95
+    attackRange: 5.5
+    moveSpeed: 2.4
+    skillCooldown: 11
+    maxHealth: 600
+    attack: 68
+    defense: 28
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 4
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 11400000, guid: 7d9f3c8f1f272ed45bbd4b398c594d99, type: 2}
+    passive: {fileID: 11400000, guid: c863b7a6a4a891447a3ff6b6d9ce0b83, type: 2}
+    skill: {fileID: 11400000, guid: 3a75a35b3fc49f6468aa503ee1da9704, type: 2}
+    ultAbility: {fileID: 11400000, guid: 3deba7b16b0f3db4fb59273c4eeabc75, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 1
+    ultMultiplier: 0
+    hasUlt: 1
+  - id: reimu_boss
+    displayName: Reimu Hakurei (Boss)
+    species: 2
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 2
+    attackType: 1
+    attackSpeed: 0.95
+    attackRange: 5.5
+    moveSpeed: 2.8
+    skillCooldown: 10
+    maxHealth: 1150
+    attack: 44
+    defense: 40
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 2
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 11400000, guid: 7d9f3c8f1f272ed45bbd4b398c594d99, type: 2}
+    passive: {fileID: 11400000, guid: 01cebc55e4207d14ba4308e1dc151480, type: 2}
+    skill: {fileID: 11400000, guid: ffa471ff4fa83d847a581c4546b3d374, type: 2}
+    ultAbility: {fileID: 11400000, guid: 4bf349d02d146bf4797456fce0c2d0d9, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 1.2
+    ultMultiplier: 4.5
+    hasUlt: 1
+  - id: yuugi_boss
+    displayName: Yuugi Hoshiguma (Boss Final)
+    species: 0
+    sprite: {fileID: 0}
+    isPullable: 0
+    pullChance: 0
+    role: 0
+    attackType: 0
+    attackSpeed: 0.85
+    attackRange: 1.4
+    moveSpeed: 2.5
+    skillCooldown: 9
+    maxHealth: 6200
+    attack: 24
+    defense: 58
+    maxBooze: 100
+    boozePerSecond: 1
+    boozeOnHit: 5
+    boozeOnHurt: 0.8
+    boozeOnKill: 10
+    basicAttackAbility: {fileID: 0}
+    passive: {fileID: 11400000, guid: 862be33e30aa92f47a5c88d916168c29, type: 2}
+    skill: {fileID: 11400000, guid: c8f43a1aa6069ef438260405a9793fc2, type: 2}
+    ultAbility: {fileID: 11400000, guid: 7544f62b5c046ee45804aed7a2ba4603, type: 2}
+    basicMultiplier: 1
+    skillMultiplier: 1.4
     ultMultiplier: 0
     hasUlt: 1

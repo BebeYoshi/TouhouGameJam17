@@ -27,10 +27,22 @@ public partial class MoverAteInimigoMaisPrximoAction : Action
     {
         if(Inimigo.Value == null || rb == null)
             return Status.Failure;
-        Vector2 posicaoDesejada = Inimigo.Value.transform.position;
 
-        float distancia = Vector2.Distance(rb.position, posicaoDesejada);
-        if( distancia <= range){
+        CombatStats self = GameObject.GetComponent<CombatStats>(); 
+
+        if (self != null && !self.CanAct)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return Status.Running;
+        }
+
+        Vector2 posicaoDesejada = Inimigo.Value.transform.position;
+        bool inRange = self != null && self.IsInitialized
+            ? self.IsInRange(Inimigo.Value.GetComponent<CombatStats>())
+            : Vector2.Distance(rb.position, posicaoDesejada) <= range;
+
+        if (inRange)
+        {
             rb.linearVelocity = Vector2.zero;
             return Status.Success;
         }

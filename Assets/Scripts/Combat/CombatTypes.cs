@@ -23,8 +23,7 @@ public enum StatusEffectType
     ProjectileShield,
     DamageBuff,      
     BoozeGainBuff,
-    HealReduction,   
-    Charm,           
+    HealReduction,
     Revived
 }
 
@@ -64,5 +63,23 @@ public enum MultiplierSource
 {
     Basic,
     Skill,
-    Custom
+    Custom,
+    Ult
 }
+
+public enum AttackKind
+{
+    Basic,
+    Skill,
+    Ult
+}
+
+public enum TargetMode
+{
+    CurrentOrNearest,
+    NearestEnemies,
+    FarthestEnemy,
+    LowestHealthAlly,
+    AllyClosestToUlt,
+    DeadAlly
+}
