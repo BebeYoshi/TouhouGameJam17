@@ -12,6 +12,10 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject canvasDerrota;
     [SerializeField] int level;
 
+    public event Action Victory;
+
+    private bool battleOver;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,18 +28,23 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void DisparouMorteInimigo(CombatStats deadEnemy){
-        if(VerificaVitoria()) {
+    private void DisparouMorteInimigo(CombatStats deadEnemy)
+    {
+        if (!battleOver && VerificaVitoria())
+        {
+            battleOver = true;
             canvasVitoria.SetActive(true);
-
-            // sceneLoader.CarregaCena("Cena 2");
-        };
-
+            Victory?.Invoke();
+        }
     }
 
-    private void DisparouMorteAliado(CombatStats deadAlly){
-        if(VerificaDerrota())   canvasDerrota.SetActive(true);
-;
+    private void DisparouMorteAliado(CombatStats deadAlly)
+    {
+        if (!battleOver && VerificaDerrota())
+        {
+            battleOver = true;
+            canvasDerrota.SetActive(true);
+        }
     }
 
     private bool VerificaVitoria(){

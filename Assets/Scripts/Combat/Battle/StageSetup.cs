@@ -13,6 +13,8 @@ public class StageSetup : MonoBehaviour
     [SerializeField] private List<CombatStats> enemySlots = new List<CombatStats>();
     private static Vector3 VisualOffset = new Vector3(0.61f, 0.252f, 0f);
 
+    public StageEncounter Encounter => encounter;
+
     private void Awake()
     {
         if (database == null || party == null || encounter == null)

@@ -15,9 +15,9 @@ MonoBehaviour:
   stageId: 1-1
   isBoss: 0
   enemies:
-  - characterId: spirit
-    level: 1
   - characterId: fairy
     level: 1
-  - characterId: dolls
-    level: 1
+  powerReward: 100
+  pointReward: 100
+  rerunPowerReward: 50
+  rerunPointReward: 25
