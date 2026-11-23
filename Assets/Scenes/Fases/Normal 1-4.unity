@@ -1381,7 +1381,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3002402983128515153, guid: 23f785a79c2e1394fafd2796731815f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1409,6 +1409,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &570823592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247489390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca1e84cee6667b4ead91aba562eeebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageReward
+  battleManager: {fileID: 73635701}
+  stageSetup: {fileID: 1105096275}
+  playerInfo: {fileID: 11400000, guid: 7db77273890849743a5fa64cf91f290a, type: 2}
+  powerText: {fileID: 0}
+  pointText: {fileID: 0}
 --- !u!1 &587355305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2463,23 +2480,6 @@ MonoBehaviour:
   - {fileID: 259514783}
   - {fileID: 1073228626}
   - {fileID: 1818043217}
---- !u!114 &570823592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1247489390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aca1e84cee6667b4ead91aba562eeebe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StageReward
-  battleManager: {fileID: 73635701}
-  stageSetup: {fileID: 1105096275}
-  playerInfo: {fileID: 11400000, guid: 7db77273890849743a5fa64cf91f290a, type: 2}
-  powerText: {fileID: 0}
-  pointText: {fileID: 0}
 --- !u!1 &1193231497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2544,7 +2544,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: -5
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1098747887022220675, guid: 6281415b2fb25d2428944543d4221ece, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4540,6 +4540,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973587002}
   m_CullTransparentMesh: 1
+--- !u!1 &1988922274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1988922276}
+  - component: {fileID: 1988922275}
+  m_Layer: 0
+  m_Name: MusicPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1988922275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988922274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdaee6a00517bfe4a86b5fea9a69f7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
+  src: {fileID: 0}
+  musica: {fileID: 8300000, guid: 9103cecdb8c92b04bb4536f94648abe4, type: 3}
+  precisaGuardar: 1
+  playonAwake: 1
+  storeTime: 0
+  volMusic: 0.1
+--- !u!4 &1988922276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988922274}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2459, y: -0.33187, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4558,3 +4608,4 @@ SceneRoots:
   - {fileID: 520943181}
   - {fileID: 263926631}
   - {fileID: 1706697670}
+  - {fileID: 1988922276}

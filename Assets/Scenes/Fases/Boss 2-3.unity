@@ -1991,6 +1991,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947446068}
   m_CullTransparentMesh: 1
+--- !u!1 &961938139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 961938141}
+  - component: {fileID: 961938140}
+  m_Layer: 0
+  m_Name: MusicPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &961938140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961938139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdaee6a00517bfe4a86b5fea9a69f7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
+  src: {fileID: 0}
+  musica: {fileID: 8300000, guid: f32dda3d3041bf34e8b9ab4b651c4940, type: 3}
+  precisaGuardar: 1
+  playonAwake: 1
+  storeTime: 0
+  volMusic: 0.1
+--- !u!4 &961938141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961938139}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2459, y: -0.33187, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1052688415
 GameObject:
   m_ObjectHideFlags: 0
@@ -3361,6 +3411,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1682400926}
   m_CullTransparentMesh: 1
+--- !u!114 &1706084639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161918719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca1e84cee6667b4ead91aba562eeebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageReward
+  battleManager: {fileID: 73635701}
+  stageSetup: {fileID: 1846055340}
+  playerInfo: {fileID: 11400000, guid: 7db77273890849743a5fa64cf91f290a, type: 2}
+  powerText: {fileID: 0}
+  pointText: {fileID: 0}
 --- !u!1 &1733559091
 GameObject:
   m_ObjectHideFlags: 0
@@ -3993,23 +4060,6 @@ MonoBehaviour:
   - {fileID: 259514783}
   - {fileID: 1073228626}
   - {fileID: 1818043217}
---- !u!114 &1706084639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161918719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aca1e84cee6667b4ead91aba562eeebe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StageReward
-  battleManager: {fileID: 73635701}
-  stageSetup: {fileID: 1846055340}
-  playerInfo: {fileID: 11400000, guid: 7db77273890849743a5fa64cf91f290a, type: 2}
-  powerText: {fileID: 0}
-  pointText: {fileID: 0}
 --- !u!1 &1912829738
 GameObject:
   m_ObjectHideFlags: 0
@@ -4558,3 +4608,4 @@ SceneRoots:
   - {fileID: 520943181}
   - {fileID: 263926631}
   - {fileID: 1224707945}
+  - {fileID: 961938141}

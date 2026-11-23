@@ -60,7 +60,8 @@ public class StageSetup : MonoBehaviour
         }
 
         GameObject visual = Instantiate(prefab, slot.transform);
-        visual.transform.localPosition = VisualOffset;
+        visual.transform.localScale *= 3f;
+        visual.transform.localPosition = VisualOffset * 3f;
 
         foreach (Rigidbody2D body in visual.GetComponentsInChildren<Rigidbody2D>())
         {
