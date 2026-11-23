@@ -32,6 +32,7 @@ public class Player_info : ScriptableObject
     debugPoint = Data.point;
 }
 
+    public int ClearedStagesCount => Data.clearedStages.Count;
     public int Power => Data.power;
     public int Point => Data.point;
 
