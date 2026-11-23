@@ -57,6 +57,10 @@ public class StageReward : MonoBehaviour
                 playerInfo.HabilitaCharBanner("kasen");
                 RewardUIManager.Instance?.ShowNotification("Kasen is available on banner!");
                 break;
+              case "3-6":
+                playerInfo.HabilitaCharBanner("yuyuko");
+                RewardUIManager.Instance?.ShowNotification("Yuyuko is available on banner!");
+                break;
 
             case "3-9":
                 playerInfo.HabilitaCharBanner("yuugi");
