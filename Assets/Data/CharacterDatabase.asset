@@ -16,7 +16,7 @@ MonoBehaviour:
   - id: suika
     displayName: Suika Ibuki
     species: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 998338249565665544, guid: b49d4cafdc00aec4cacd3369574d8b5a, type: 3}
     isPullable: 0
     pullChance: 0
     role: 0
@@ -44,9 +44,9 @@ MonoBehaviour:
   - id: spirit
     displayName: Spirit
     species: 0
-    sprite: {fileID: 0}
-    isPullable: 0
-    pullChance: 0
+    sprite: {fileID: 5725872871977202542, guid: 02891600a71c1284facd3bf51157168e, type: 3}
+    isPullable: 1
+    pullChance: 10
     role: 2
     attackType: 1
     attackSpeed: 1.05
@@ -72,9 +72,9 @@ MonoBehaviour:
   - id: fairy
     displayName: Fairy
     species: 0
-    sprite: {fileID: 0}
-    isPullable: 0
-    pullChance: 0
+    sprite: {fileID: -2990309890484215505, guid: fbc4e0021cd7dad4094c0cebc0c1c8cd, type: 3}
+    isPullable: 1
+    pullChance: 10
     role: 2
     attackType: 1
     attackSpeed: 1
@@ -100,9 +100,9 @@ MonoBehaviour:
   - id: dolls
     displayName: Shanghai & Hourai Dolls
     species: 1
-    sprite: {fileID: 0}
-    isPullable: 0
-    pullChance: 0
+    sprite: {fileID: -982357514271383733, guid: ad0c53f33e973314997f6af0e8fd0292, type: 3}
+    isPullable: 1
+    pullChance: 10
     role: 0
     attackType: 0
     attackSpeed: 0.9
@@ -128,7 +128,7 @@ MonoBehaviour:
   - id: miyoi
     displayName: Miyoi Okunoda
     species: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 8116092653061844741, guid: 14a4397c479ffa94fb4e8c0c376853e8, type: 3}
     isPullable: 0
     pullChance: 0
     role: 1
@@ -156,7 +156,7 @@ MonoBehaviour:
   - id: mamizou
     displayName: Mamizou Futatsuiwa
     species: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 8116092653061844741, guid: 14a4397c479ffa94fb4e8c0c376853e8, type: 3}
     isPullable: 0
     pullChance: 0
     role: 1
@@ -184,7 +184,7 @@ MonoBehaviour:
   - id: reimu
     displayName: Reimu Hakurei
     species: 2
-    sprite: {fileID: 0}
+    sprite: {fileID: -6526597336363400846, guid: 734b2c67e76af0445b2740bebf5f7082, type: 3}
     isPullable: 0
     pullChance: 0
     role: 2
@@ -212,7 +212,7 @@ MonoBehaviour:
   - id: aya
     displayName: Aya Shameimaru
     species: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: -7170808438225160291, guid: dfd38cf2052bb0b4fad082babc9e56a6, type: 3}
     isPullable: 0
     pullChance: 0
     role: 2
@@ -240,7 +240,7 @@ MonoBehaviour:
   - id: momiji
     displayName: Momiji Inubashiri
     species: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 4320375214965937208, guid: fe15dc67a5288174da2490ca731d8f99, type: 3}
     isPullable: 0
     pullChance: 0
     role: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
   - id: kasen
     displayName: Kasen Ibaraki
     species: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 1068022159206336728, guid: fac6f6cdd4160e84997c0e24999f0584, type: 3}
     isPullable: 0
     pullChance: 0
     role: 2
@@ -296,7 +296,7 @@ MonoBehaviour:
   - id: yuugi
     displayName: Yuugi Hoshiguma
     species: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 477985465640790496, guid: 61759a6c816e38a4d994ee209b13f8d1, type: 3}
     isPullable: 0
     pullChance: 0
     role: 0
@@ -324,7 +324,7 @@ MonoBehaviour:
   - id: yuyuko
     displayName: Yuyuko Saigyouji
     species: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 8501594912875067406, guid: d5b91e98044c3894cb4680c583dc803c, type: 3}
     isPullable: 0
     pullChance: 0
     role: 1

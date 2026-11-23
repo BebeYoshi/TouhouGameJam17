@@ -4,9 +4,12 @@ using System;
 [CreateAssetMenu(fileName = "Player_info", menuName = "Scriptable Objects/Player_info")]
 public class Player_info : ScriptableObject
 {
+
     private const string SaveKey = "player_save";
 
     private PlayerSave data;
+    [SerializeField] private int debugPower;
+    [SerializeField] private int debugPoint;
 
     public event Action CurrencyChanged;
 
@@ -22,6 +25,12 @@ public class Player_info : ScriptableObject
             return data;
         }
     }
+
+    private void UpdateDebugValues()
+{
+    debugPower = Data.power;
+    debugPoint = Data.point;
+}
 
     public int Power => Data.power;
     public int Point => Data.point;
@@ -95,6 +104,8 @@ public class Player_info : ScriptableObject
     {
         string json = PlayerPrefs.GetString(SaveKey, "");
         data = string.IsNullOrEmpty(json) ? new PlayerSave() : JsonUtility.FromJson<PlayerSave>(json);
+        UpdateDebugValues();
+
     }
 
     [ContextMenu("Reset Save")]

@@ -45,6 +45,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Fases/Boss 3-9.unity
     guid: 156e77435ff0b77458cacb0f0b5bc28f
   - enabled: 1
+    path: Assets/Scenes/Fases/TimeSelectionScreen.unity
+    guid: 3dd91ac559726f249b5f34a221189585
+  - enabled: 1
     path: Assets/Scenes/Fases/Normal 1-5.unity
     guid: c3988c807f72fb14ab8abdb55a23e33a
   - enabled: 1
@@ -80,6 +83,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 3-8.unity
     guid: c29f974493b083b449adf4fd90c73f2e
+  - enabled: 1
+    path: Assets/Scenes/Fases/Map.unity
+    guid: 497a9a082d8594b48937f5dd497942b1
+  - enabled: 1
+    path: Assets/Scenes/Fases/Map.unity
+    guid: 9cddd76bca4f69942a5125a5e512fb00
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 99f9c9493070a9d4c979a8fec7c5a8d3, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

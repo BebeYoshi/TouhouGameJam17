@@ -16,4 +16,9 @@ public class UnitEntry
         characterId = id;
         level = unitLevel;
     }
+
+    public void LevelUp()
+    {
+        level++;
+    }
 }

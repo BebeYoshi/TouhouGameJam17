@@ -8,9 +8,10 @@ public class GachaPull : ScriptableObject
 {
     [SerializeField] private CharacterDatabase _pullablePersonagens;
     [SerializeField] private  List<Personagens> _personagens;
-    [SerializeField] private CharacterDatabase _team;
-    public bool repetido;
+    [SerializeField] private PartyLoadout _team;
+    [SerializeField] private Player_info playerInfo;
 
+    public bool repetido;
 
     private bool isInitialized = false;
     private float chanceTotal;
@@ -38,28 +39,40 @@ public class GachaPull : ScriptableObject
             }
     }
 
-    public Personagens SortearPersonagem(){
-        Initialize();
-        
-        float geraNumeroRandom = Random.Range(0f, chanceTotal);
-        foreach(var personagem in _personagens){
-            if(personagem.chance >= geraNumeroRandom){
-            Debug.Log(personagem.id);
-            CharacterData chaar = _pullablePersonagens.FindById(personagem.id);
-            Debug.Log("NOME" + chaar.displayName);
-            if(chaar != null){
-                Debug.Log("ENTROU NO ADD");
-                 _team.insertNewCharacter(chaar);
-                repetido = false;
-                return personagem;
-            }
-            //  else repetido = true;
-            //  return personagem;
-            }
-            geraNumeroRandom -= personagem.chance;
-            Debug.Log(personagem.chance + "  " + geraNumeroRandom);
+    public Personagens SortearPersonagem()
+{
+    Initialize();
+
+    float geraNumeroRandom = Random.Range(0f, chanceTotal);
+
+    foreach (var personagem in _personagens)
+    {
+    if (geraNumeroRandom < personagem.chance)
+    {
+        bool jaPossui = _team.GetMember(personagem.id) != null;
+
+        if (!jaPossui)
+        {
+            _team.AddMember(
+                new UnitEntry(personagem.id, 1)
+            );
+
+            repetido = false;
         }
-        throw new System.Exception("Deu merda");
+        else
+        {
+            playerInfo.AddPoint(50);
+            playerInfo.AddPower(100);
+
+            repetido = true;
+        }
+
+        return personagem;
+    }
+    geraNumeroRandom -= personagem.chance;
+
+    }
+    throw new System.Exception("Deu merda");
     }
 
     [System.Serializable]
