@@ -41,9 +41,6 @@ public class GachaController : MonoBehaviour
     {
         power.SetText(playerInfo.Power.ToString());
         points.SetText(playerInfo.Point.ToString());
-            playerInfo.AddPoint(850); // REMOVER ISSO PELO AMOR DE DEUS
-    playerInfo.AddPower(800);
-
     }
 
     // Update is called once per frame

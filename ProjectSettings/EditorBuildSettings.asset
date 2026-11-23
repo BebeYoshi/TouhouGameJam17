@@ -6,14 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Fases/Map.unity
+    guid: 497a9a082d8594b48937f5dd497942b1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Cena 2.unity
     guid: fe902d705e714124d8321cf39fa7327d
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 3-2.unity
-    guid: a771dacc298f57b45afbe0205b331bf2
+    guid: c62e2abf4ed79b041ae09962a5cce818
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 1-1.unity
     guid: fb92e2488a9f4084bb9ce8349fa67374
@@ -31,19 +34,19 @@ EditorBuildSettings:
     guid: dfae83ee69f12dc40b1a2edfc4da3dfd
   - enabled: 1
     path: Assets/Scenes/Fases/Boss 2-3.unity
-    guid: f47ec81c5c7d04a4abcd435cb4cacc96
+    guid: 489c193a8abfd764f8311474d203dd43
   - enabled: 1
     path: Assets/Scenes/Fases/Boss 2-6.unity
-    guid: 9a35dd3cb260dc243840e46a62964deb
+    guid: daa243ad06ca0e0418a75719b39d2be2
   - enabled: 1
     path: Assets/Scenes/Fases/Boss 3-3.unity
-    guid: bf420189865421c41a350bf08b259b4e
+    guid: 3fb33ebac69787744bf30b0c2edf001f
   - enabled: 1
     path: Assets/Scenes/Fases/Boss 3-6.unity
-    guid: 013865fa6ecee8442ada62f87ed6cafe
+    guid: 553b3739ba230e1479c00de97acf1696
   - enabled: 1
     path: Assets/Scenes/Fases/Boss 3-9.unity
-    guid: 156e77435ff0b77458cacb0f0b5bc28f
+    guid: b2bc2b3cc68a748489b1d72b77ede409
   - enabled: 1
     path: Assets/Scenes/Fases/TimeSelectionScreen.unity
     guid: 3dd91ac559726f249b5f34a221189585
@@ -61,34 +64,34 @@ EditorBuildSettings:
     guid: 071b49ced3fb1244f9402e0bf480cddd
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 2-2.unity
-    guid: 588dedc2edb2e55428f864e85958648f
+    guid: 5dc6c5033c8799f4bb98dbdd29870335
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 2-4.unity
-    guid: 03a8edaac5933a0428be19e749e49b41
+    guid: 2dfb9ef87a5212b44ab318a0d98b3292
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 2-5.unity
-    guid: 72f42233493556d4f83a4245898df431
+    guid: f89f4451aaf51e84397717db36bb6513
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 3-1.unity
-    guid: f5a9a40a398195a4285c7f2dfad075ed
+    guid: bd59b36e4c2dc984187806a9b962b26f
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 3-4.unity
-    guid: dae66ae0501ab2e46a546ec55393be25
+    guid: 764245bc67b4ecb4395cd3ec2729c8b9
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 3-5.unity
-    guid: 8d04a88ac51afe442aae28633dff0daf
+    guid: 39659fcfac09f854e97ec934c3874dd4
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 3-7.unity
-    guid: d3bc4f9fc4272f7499ac62ea5078dede
+    guid: 2cba1dadb8aefa747bcf5bc9d70ee64f
   - enabled: 1
     path: Assets/Scenes/Fases/Normal 3-8.unity
-    guid: c29f974493b083b449adf4fd90c73f2e
-  - enabled: 1
-    path: Assets/Scenes/Fases/Map.unity
-    guid: 497a9a082d8594b48937f5dd497942b1
+    guid: 2f6f622533443ab459487aed739af765
   - enabled: 1
     path: Assets/Scenes/Fases/Map2.unity
     guid: 9cddd76bca4f69942a5125a5e512fb00
+  - enabled: 1
+    path: Assets/Scenes/Gacha.unity
+    guid: 71d78fc7fbbe1a548af234a0123e788d
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 99f9c9493070a9d4c979a8fec7c5a8d3, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

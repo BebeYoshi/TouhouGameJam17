@@ -254,6 +254,11 @@ public class CombatStats : MonoBehaviour
         {
             HealthChanged?.Invoke(currentHealth, MaxHealth);
             Damaged?.Invoke(roundedDamage);
+            GameObject musicObj = GameObject.FindGameObjectWithTag("Music");
+            if (musicObj != null)
+            {
+                musicObj.GetComponent<MusicClass>().PlayDamageSFX();
+            }
         }
 
         if (!IsAlive)
@@ -267,6 +272,12 @@ public class CombatStats : MonoBehaviour
             }
 
             Died?.Invoke(this);
+
+            GameObject musicObj = GameObject.FindGameObjectWithTag("Music");
+            if (musicObj != null)
+            {
+                musicObj.GetComponent<MusicClass>().PlayDeathSFX();
+            }
             return true;
         }
 
