@@ -21,3 +21,7 @@ MonoBehaviour:
     level: 5
   - characterId: spirit
     level: 5
+  powerReward: 150
+  pointReward: 200
+  rerunPowerReward: 75
+  rerunPointReward: 25

@@ -12,6 +12,8 @@ public class StageSetup : MonoBehaviour
     [SerializeField] private List<CombatStats> allySlots = new List<CombatStats>();
     [SerializeField] private List<CombatStats> enemySlots = new List<CombatStats>();
 
+    public StageEncounter Encounter => encounter;
+
     private void Awake()
     {
         if (database == null || party == null || encounter == null)

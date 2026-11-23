@@ -21,3 +21,7 @@ MonoBehaviour:
     level: 16
   - characterId: dolls
     level: 16
+  powerReward: 100
+  pointReward: 100
+  rerunPowerReward: 50
+  rerunPointReward: 25
