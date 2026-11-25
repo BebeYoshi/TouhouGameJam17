@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MusicClass : MonoBehaviour
 {
+    private static MusicClass instance;
+
     public AudioSource _audioSource;
     public AudioSource _sfxSource;
 
@@ -12,6 +14,14 @@ public class MusicClass : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
         DontDestroyOnLoad(transform.gameObject);
         _audioSource = GetComponent<AudioSource>();
     }

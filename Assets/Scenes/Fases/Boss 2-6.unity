@@ -3075,7 +3075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
   src: {fileID: 0}
   musica: {fileID: 8300000, guid: f32dda3d3041bf34e8b9ab4b651c4940, type: 3}
-  precisaGuardar: 1
+  precisaGuardar: 0
   playonAwake: 1
   storeTime: 0
   volMusic: 0.1

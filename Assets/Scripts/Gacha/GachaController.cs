@@ -138,6 +138,9 @@ public void retornaCincoResultados()
 
             StopCoroutine(animation);
 
+            power.SetText(playerInfo.Power.ToString());
+            points.SetText(playerInfo.Point.ToString());
+
             target.sprite = personagem.sprite;
 
             if (quantidade == 1)

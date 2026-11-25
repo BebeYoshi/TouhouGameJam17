@@ -6,6 +6,7 @@ public class CurrentLevelInfo : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI levelAtual;
     [SerializeField] private Image textoLevel;
+    [SerializeField] private Image playButton;
     [SerializeField] private Image imagemMundo1;
     [SerializeField] private Image imagemMundo2;
     [SerializeField] private Image imagemMundo3;
@@ -42,6 +43,7 @@ public class CurrentLevelInfo : MonoBehaviour
         {
             levelAtual.text = levelName;
             textoLevel.gameObject.SetActive(true);
+            playButton.gameObject.GetComponent<Button> ().interactable = true;
         }
     }
 

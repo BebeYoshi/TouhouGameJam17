@@ -5,7 +5,7 @@ using System.Linq;
 [CreateAssetMenu(fileName = "CharacterDatabase", menuName = "Scriptable Objects/CharacterDatabase")]
 public class CharacterDatabase : ScriptableObject
 {
-    [SerializeField] private List<CharacterData> characters = new List<CharacterData>();
+    public List<CharacterData> characters = new List<CharacterData>();
 
     public bool insertNewCharacter(CharacterData characterToAdd){
         if(FindById(characterToAdd.id) == null){

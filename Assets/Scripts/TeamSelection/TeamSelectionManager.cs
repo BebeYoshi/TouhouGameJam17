@@ -179,6 +179,7 @@ public class TeamSelectionManager : MonoBehaviour
     }
 
     powerUp.Setup(inspectedCharacter.id.ToString());
+    custoTXT.text = cost.ToString();
     }
 
     private bool IsUnlocked(CharacterData character)
