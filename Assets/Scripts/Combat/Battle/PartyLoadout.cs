@@ -22,13 +22,24 @@ public class PartyLoadout : ScriptableObject
         );
     }
 
-   public void AddMember(UnitEntry member)
+    public void AddMember(UnitEntry member)
     {
-    if (member == null)
-        return;
-        
-    if (members.Exists(m => m.CharacterId == member.CharacterId))
-        return;
-    members.Add(member);
+        if (member == null)
+            return;
+
+        if (members.Exists(m => m.CharacterId == member.CharacterId))
+            return;
+        members.Add(member);
+    }
+    public void LevelUpMember(string characterId)
+    {
+        for (int i = 0; i < members.Count; i++)
+        {
+            if (members[i].CharacterId == characterId)
+            {
+                members[i].LevelUp();
+                return;
+            }
+        }
     }
 }

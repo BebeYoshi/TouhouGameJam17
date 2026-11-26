@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ca1eb538cfa1947a9cd083d6e234ba, type: 3}
   m_Name: Momiji_Ult_ChewingSatisfaction
   m_EditorClassIdentifier: Assembly-CSharp::DirectHitAbility
+  castDelay: 0.5
   targetMode: 1
-  targetCount: 2
+  targetCount: 3
   multiplierSource: 3
   customMultiplier: 0
   effect:

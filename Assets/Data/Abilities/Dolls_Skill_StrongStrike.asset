@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ca1eb538cfa1947a9cd083d6e234ba, type: 3}
   m_Name: Dolls_Skill_StrongStrike
   m_EditorClassIdentifier: Assembly-CSharp::DirectHitAbility
+  castDelay: 0.5
   targetMode: 0
   targetCount: 1
   multiplierSource: 1

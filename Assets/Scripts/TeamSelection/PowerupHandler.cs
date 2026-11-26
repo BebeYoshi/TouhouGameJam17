@@ -3,6 +3,7 @@ using TMPro;
 
 public class PowerupHandler : MonoBehaviour
 {
+    public event System.Action OnCharacterUpgraded;
     [SerializeField] private GameObject powerupPanel;
     [SerializeField] private PartyLoadout fullRoster;
     [SerializeField] private CharacterDatabase database;
@@ -77,18 +78,20 @@ public class PowerupHandler : MonoBehaviour
 
     public void ConfirmPowerup()
     {
-        if (selectedCharacter.Level >= 40)
+        if (selectedCharacter == null || selectedCharacter.Level >= 40)
             return;
 
-       int cost = Mathf.RoundToInt(20 * Mathf.Pow(1.04f, selectedCharacter.Level));
+        int cost = Mathf.RoundToInt(20 * Mathf.Pow(1.04f, selectedCharacter.Level));
+
         if (!playerInfo.SpendPower(cost))
         {
             Debug.Log("Power insuficiente!");
             return;
         }
 
-        selectedCharacter.LevelUp();
+        fullRoster.LevelUpMember(selectedCharacter.CharacterId);
 
+        OnCharacterUpgraded?.Invoke();
         ClosePowerup();
     }
 

@@ -3,6 +3,8 @@ using UnityEngine;
 public abstract class CombatAbility : ScriptableObject
 {
     public abstract bool Execute(CombatStats owner, CombatStats target, AttackKind kind);
+    [SerializeField, Min(0f)] private float castDelay = 0f;
+    public float CastDelay => castDelay;
 
     protected static float ResolveMultiplier(CombatStats owner, MultiplierSource source, float customMultiplier)
     {

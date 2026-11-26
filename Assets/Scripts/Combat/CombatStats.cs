@@ -25,6 +25,10 @@ public class CombatStats : MonoBehaviour
     private bool ultLocked;
     private bool hasBeenRevived;
     private float deathTime;
+    private CombatAbility pendingAbility;
+    private CombatStats pendingTarget;
+    private AttackKind pendingKind;
+    private float castTimer;
     
 
     public CharacterData Data => data;
@@ -36,6 +40,7 @@ public class CombatStats : MonoBehaviour
     public int Level => level;
     public BattleSide Side => side;
     public bool IsInitialized => data != null;
+    public bool IsCasting => pendingAbility != null;
     public float Attack => data.Attack * levelMultiplier * (1f + GetAttackBonus());
     public float Defense => data.Defense * levelMultiplier * (1f + GetDefenseBonus());
     public float MaxHealth => Mathf.Round(data.MaxHealth * levelMultiplier);
@@ -49,8 +54,8 @@ public class CombatStats : MonoBehaviour
     public bool IsUltReady => data != null && data.HasUlt && !ultLocked && currentBooze >= maxBooze;
     public bool IsStunned => HasEffect(StatusEffectType.Stun);
     public bool CanAct => IsAlive && !IsStunned;
-    public bool IsAttackReady => CanAct && attackTimer <= 0f;
-    public bool IsSkillReady => CanAct && data.Skill != null && skillTimer <= 0f;
+    public bool IsAttackReady => CanAct && !IsCasting && attackTimer <= 0f;
+    public bool IsSkillReady => CanAct && !IsCasting && data.Skill != null && skillTimer <= 0f;
     public float SkillCooldownRemaining => skillTimer;
     private PassiveAbility Passive => data != null ? data.Passive : null;
      
@@ -127,6 +132,7 @@ public class CombatStats : MonoBehaviour
         deathTime = 0f;
         boozeLossOnHurt = 0f;
         boozeLossOnHurtPercent = 0f;
+        CancelCast();
         effects.Clear();
 
         if (Passive != null)
@@ -214,6 +220,32 @@ public class CombatStats : MonoBehaviour
         attackTimer = Mathf.Max(0f, attackTimer - deltaTime);
         skillTimer = Mathf.Max(0f, skillTimer - deltaTime);
         TickEffects(deltaTime);
+        if (IsCasting)
+        {
+            if (!CanAct)
+            {
+                CancelCast();
+                return;
+            }
+
+            castTimer -= deltaTime;
+            if (castTimer <= 0f)
+            {
+                CombatAbility abilityToFire = pendingAbility;
+                CombatStats targetToHit = pendingTarget;
+                AttackKind kindToFire = pendingKind;
+                CancelCast();
+
+                abilityToFire.Execute(this, targetToHit, kindToFire);
+            }
+        }
+    }
+
+    private void CancelCast()
+    {
+        pendingAbility = null;
+        pendingTarget = null;
+        castTimer = 0f;
     }
 
     public void TakeDamage(float amount)
@@ -264,6 +296,7 @@ public class CombatStats : MonoBehaviour
         if (!IsAlive)
         {
             deathTime = Time.time;
+            CancelCast();
             effects.Clear();
 
             if (Passive != null)
@@ -315,7 +348,14 @@ public class CombatStats : MonoBehaviour
             return false;
         }
 
-        if (!data.Skill.Execute(this, target, AttackKind.Skill))
+        if (data.Skill.CastDelay > 0f)
+        {
+            pendingAbility = data.Skill;
+            pendingTarget = target;
+            pendingKind = AttackKind.Skill;
+            castTimer = data.Skill.CastDelay;
+        }
+        else if (!data.Skill.Execute(this, target, AttackKind.Skill))
         {
             return false;
         }
@@ -474,7 +514,16 @@ public class CombatStats : MonoBehaviour
             return false;
         }
 
-        if (!data.UltAbility.Execute(this, target, AttackKind.Ult))
+        CancelCast();
+
+        if (data.UltAbility.CastDelay > 0f)
+        {
+            pendingAbility = data.UltAbility;
+            pendingTarget = target;
+            pendingKind = AttackKind.Ult;
+            castTimer = data.UltAbility.CastDelay;
+        }
+        else if (!data.UltAbility.Execute(this, target, AttackKind.Ult))
         {
             return false;
         }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80a3891b3ed15d4db1afcc61ee9d4cc, type: 3}
   m_Name: Mamizou_Skill_Tsurube
   m_EditorClassIdentifier: Assembly-CSharp::HitboxAbility
+  castDelay: 0.33
   hitboxPrefab: {fileID: 6935500956617044948, guid: 776cbfe3a522e644bab01f72c8c5ec33, type: 3}
   spawnAt: 0
   targets: 0
@@ -23,10 +24,12 @@ MonoBehaviour:
     multiplier: 0.25
     duration: 4
     dotKind: 0
+  forwardOffset: 0
   projectileCount: 1
   spawnRadius: 0
   launchInterval: 0
   homing: 0
+  spreadAngle: 0
   spreadAcrossEnemies: 0
   outwardSpeed: 0
   outwardDuration: 0

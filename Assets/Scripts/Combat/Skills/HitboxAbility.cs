@@ -10,6 +10,7 @@ public class HitboxAbility : CombatAbility
     [SerializeField] private MultiplierSource multiplierSource = MultiplierSource.Skill;
     [SerializeField, Min(0f)] private float customMultiplier = 0f;
     [SerializeField] private EffectSpec effect = new EffectSpec();
+    [SerializeField] private float forwardOffset = 0f;
 
     [Header("Projectiles")]
     [SerializeField, Min(1)] private int projectileCount = 1;
@@ -42,14 +43,28 @@ public class HitboxAbility : CombatAbility
             return false;
         }
 
+        bool horizontalOnly = !hitboxPrefab.IsProjectile;
         Vector3 position = spawnAt == HitboxSpawn.Target ? target.transform.position : owner.transform.position;
         Quaternion rotation = Quaternion.identity;
+        float facingSign = owner.Side == BattleSide.Player ? 1f : -1f;
 
         if (hasTarget)
         {
             Vector2 direction = target.transform.position - owner.transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            rotation = Quaternion.Euler(0f, 0f, angle);
+            if (Mathf.Abs(direction.x) > 0.001f)
+            {
+                facingSign = Mathf.Sign(direction.x);
+            }
+            if (!horizontalOnly)
+            {
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                rotation = Quaternion.Euler(0f, 0f, angle);
+            }
+        }
+
+        if (horizontalOnly && spawnAt == HitboxSpawn.Owner)
+        {
+            position += new Vector3(facingSign * forwardOffset, 0f, 0f);
         }
 
         float multiplier = ResolveMultiplier(owner, multiplierSource, customMultiplier);
@@ -59,7 +74,14 @@ public class HitboxAbility : CombatAbility
         for (int i = 0; i < projectileCount; i++)
         {
             Vector3 offset = GetSpawnOffset(i);
-            SkillHitbox hitbox = Instantiate(hitboxPrefab, position + offset, rotation * GetSpreadRotation(i));
+            Quaternion spawnRot = horizontalOnly ? Quaternion.identity : rotation * GetSpreadRotation(i);
+            SkillHitbox hitbox = Instantiate(hitboxPrefab, position + offset, spawnRot);
+            if (horizontalOnly)
+            {
+                Vector3 scale = hitbox.transform.localScale;
+                scale.x = Mathf.Abs(scale.x) * facingSign;
+                hitbox.transform.localScale = scale;
+            }
             hitbox.Setup(owner, targets, multiplier, effect, kind);
 
             if (homing && hasTarget)

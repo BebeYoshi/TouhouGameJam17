@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d850a1ca56fcd4447a169b1ae0692dd6, type: 3}
   m_Name: Momiji_Skill_Shield
   m_EditorClassIdentifier: Assembly-CSharp::BarrierAbility
+  castDelay: 0.33
   barrierPrefab: {fileID: 5034829951874815566, guid: 177e302787316604eb09106a934d51c0, type: 3}
   distanceInFront: 1

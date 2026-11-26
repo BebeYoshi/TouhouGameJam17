@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01d91fbe21c0374f8de2539b98e6e09, type: 3}
   m_Name: Aya_Ult_WindDash
   m_EditorClassIdentifier: Assembly-CSharp::DashAbility
+  castDelay: 0.3
   targetMode: 2
   multiplierSource: 3
   customMultiplier: 0

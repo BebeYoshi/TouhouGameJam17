@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf94551d48637240ae65e606e7c50e1, type: 3}
   m_Name: Kasen_Ult_TrueForm
   m_EditorClassIdentifier: Assembly-CSharp::SelfEffectAbility
+  castDelay: 0.33
   effects:
   - apply: 1
     type: 6

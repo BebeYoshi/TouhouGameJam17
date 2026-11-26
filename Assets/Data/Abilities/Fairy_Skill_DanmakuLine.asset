@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80a3891b3ed15d4db1afcc61ee9d4cc, type: 3}
   m_Name: Fairy_Skill_DanmakuLine
   m_EditorClassIdentifier: Assembly-CSharp::HitboxAbility
+  castDelay: 0.5
   hitboxPrefab: {fileID: 6951866020402326489, guid: 03068ec8246b9da43888f2fd7de0a34d, type: 3}
   spawnAt: 0
   targets: 0
@@ -23,10 +24,12 @@ MonoBehaviour:
     multiplier: 0.2
     duration: 3
     dotKind: 0
+  forwardOffset: 0
   projectileCount: 3
   spawnRadius: 0.8
   launchInterval: 0.15
   homing: 1
+  spreadAngle: 0
   spreadAcrossEnemies: 0
   outwardSpeed: 0
   outwardDuration: 0

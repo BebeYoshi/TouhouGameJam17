@@ -39,18 +39,31 @@ public class TeamSelectionManager : MonoBehaviour
     private void Start()
     {
         GeraPersonagens();
+        List<CharacterData> characters = database.ReturnAll();
+        foreach (var character in characters)
+        {
+            if (IsUnlocked(character))
+            {
+                inspectedCharacter = character;
+                AtualizaPreview();
+                break;
+            }
+        }
+
         AtualizaUISelecao();
-        powerTXT.text = playerInfo.Power.ToString();
+        AtualizaPower();
     }
 
     private void OnEnable()
         {
             playerInfo.CurrencyChanged += AtualizaPower;
+            powerUp.OnCharacterUpgraded += AtualizaUISelecao;
         }
 
         private void OnDisable()
         {
             playerInfo.CurrencyChanged -= AtualizaPower;
+            powerUp.OnCharacterUpgraded -= AtualizaUISelecao;
         }
 
         private void AtualizaPower()
@@ -174,12 +187,11 @@ public class TeamSelectionManager : MonoBehaviour
         int cost = Mathf.RoundToInt(20 * Mathf.Pow(1.04f, personagemSelecionado.Level));
         var currency = playerInfo.Power;
 
-    if(currency < cost){
-        return;
-    }
+        if(currency < cost){
+            return;
+        }
 
-    powerUp.Setup(inspectedCharacter.id.ToString());
-    custoTXT.text = cost.ToString();
+        powerUp.Setup(inspectedCharacter.id.ToString());
     }
 
     private bool IsUnlocked(CharacterData character)

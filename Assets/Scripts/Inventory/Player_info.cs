@@ -148,28 +148,23 @@ public class Player_info : ScriptableObject
     public void Load()
     {
         string json = PlayerPrefs.GetString(SaveKey, "");
-        if (string.IsNullOrEmpty(json))
-        {
-            data = new PlayerSave();
-            return;
-        }
+        data = string.IsNullOrEmpty(json) 
+        ? new PlayerSave() 
+        : JsonUtility.FromJson<PlayerSave>(json);
 
         data = JsonUtility.FromJson<PlayerSave>(json);
 
-        if (charact != null && data.pullableCharacterIds != null)
+        if (charact != null)
         {
             foreach (var c in charact.characters)
             {
-                if (data.pullableCharacterIds.Contains(c.id))
-                {
-                    c.isPullable = true;
-                }
+                c.isPullable = data.pullableCharacterIds != null && data.pullableCharacterIds.Contains(c.id);
             }
         }
 
-        if (fullRoster != null && data.rosterMembers != null)
+        if (fullRoster != null)
         {
-            fullRoster.SetParty(data.rosterMembers);
+            fullRoster.SetParty(data.rosterMembers ?? new List<UnitEntry>());
         }
     }
     [ContextMenu("Reset Player Progress")]

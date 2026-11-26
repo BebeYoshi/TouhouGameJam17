@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491d8f9d07b262348896bb3ec556142e, type: 3}
   m_Name: Miyoi_Ult_Teleport
   m_EditorClassIdentifier: Assembly-CSharp::TeleportBoozeAbility
+  castDelay: 0.17
   targetMode: 4
   boozeAmount: 30
   arrivalDistance: 1

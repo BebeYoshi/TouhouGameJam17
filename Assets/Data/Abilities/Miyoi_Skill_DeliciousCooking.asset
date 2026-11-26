@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80a3891b3ed15d4db1afcc61ee9d4cc, type: 3}
   m_Name: Miyoi_Skill_DeliciousCooking
   m_EditorClassIdentifier: Assembly-CSharp::HitboxAbility
+  castDelay: 0.25
   hitboxPrefab: {fileID: 6624944740967597875, guid: 2e23f97aae36be940b0ef8d329627093, type: 3}
   spawnAt: 0
   targets: 1
@@ -23,10 +24,12 @@ MonoBehaviour:
     multiplier: 0.4
     duration: 4
     dotKind: 0
+  forwardOffset: 0
   projectileCount: 1
   spawnRadius: 0
   launchInterval: 0
   homing: 0
+  spreadAngle: 0
   spreadAcrossEnemies: 0
   outwardSpeed: 0
   outwardDuration: 0

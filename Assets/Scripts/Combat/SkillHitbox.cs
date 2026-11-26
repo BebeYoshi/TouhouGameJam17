@@ -79,6 +79,11 @@ public class SkillHitbox : MonoBehaviour
 
         hitboxCollider.enabled = true;
 
+        if (homingTarget == null || !homingTarget.IsAlive)
+        {
+            homingTarget = BattleRoster.GetNearestEnemy(owner);
+        }
+
         if (homingTarget != null && homingTarget.IsAlive)
         {
             Vector2 offset = homingTarget.transform.position - transform.position;

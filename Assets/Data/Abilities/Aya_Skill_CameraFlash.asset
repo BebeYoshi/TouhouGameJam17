@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80a3891b3ed15d4db1afcc61ee9d4cc, type: 3}
   m_Name: Aya_Skill_CameraFlash
   m_EditorClassIdentifier: Assembly-CSharp::HitboxAbility
+  castDelay: 0.33
   hitboxPrefab: {fileID: 6825728349659068301, guid: 041697258d9e03b41869621e1c892716, type: 3}
   spawnAt: 0
   targets: 0
@@ -23,10 +24,12 @@ MonoBehaviour:
     multiplier: 0.1
     duration: 4
     dotKind: 0
+  forwardOffset: 0
   projectileCount: 1
   spawnRadius: 0
   launchInterval: 0
   homing: 0
+  spreadAngle: 0
   spreadAcrossEnemies: 0
   outwardSpeed: 0
   outwardDuration: 0
